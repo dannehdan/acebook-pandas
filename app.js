@@ -1,6 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+// var bb = require('express-busboy');
+const fileUpload = require("express-fileupload");
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -13,6 +15,11 @@ var sessionsRouter = require('./routes/sessions');
 var usersRouter = require('./routes/users');
 
 var app = express();
+// bb.extend(app, {
+//   upload: true,
+//   path: '/public/images',
+//   allowedPath: /./
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +31,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+app.use(fileUpload());
 
 app.use(session({ key: 'user_sid',
 secret: 'super_secret',
@@ -51,7 +59,21 @@ var sessionChecker = (req, res, next) => {
   // }
 };
 
+app.get('/upload', (req, res) => {
+  res.render('upload');
+});
 
+app.post('/upload', (req, res) => {
+  console.log("REQUEST FROM /upload (files):\n", req.files);
+  let sampleFile = req.files.img;
+  let uploadPath = __dirname + '/public/images/' + sampleFile.name;
+  sampleFile.mv(uploadPath, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send('File uploaded!');
+  });
+});
 
 // route setup
 app.use('/', homeRouter);
