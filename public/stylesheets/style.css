@@ -149,7 +149,11 @@ input[type=email], [type=password], [type=text] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=submit]:not(.navbar input[type=submit]) {
+input[type="file"] {
+  display: none;
+}
+
+input[type=submit]:not(.navbar input[type=submit]), #photo-upload {
   background-color: #56baed;
   border: none;
   color: white;
@@ -164,11 +168,6 @@ input[type=submit]:not(.navbar input[type=submit]) {
   margin-left: 25%;
   margin-right: 25%;
   margin-top: 20px;
-}
-
-
-.post-img {
-  max-width: 100%;
 }
 
 .card {

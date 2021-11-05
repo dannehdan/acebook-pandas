@@ -1,7 +1,9 @@
 <form id="new-post-form" action="/posts" method="post" enctype="multipart/form-data" >
   <label for="message">Message: </label>
   <input id="message" type="text" name="message" value="" />
-  <label for="image">Image: </label>
-  <input id="post-img" type="file" name="image" accept=".png, .jpg, .jpeg" />
+  <label id="photo-upload">
+    <input type="file" accept=".png, .jpg, .jpeg"/>
+    Upload Photo
+  </label>
   <input type="submit" value="Submit" />
 </form>
