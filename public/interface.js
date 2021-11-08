@@ -46,4 +46,28 @@ var addLike = id => {
       .getElementById('like-' + id)
       .querySelector('.like-number').innerText = Number(count) - 1;
   }
+  addComment(id);
+};
+
+// eslint-disable-next-line no-unused-vars
+var addComment = id => {
+  const commentUrl = '/posts/testComments';
+  const data = { postId: id, message: 'Comment added!' };
+
+  fetch(commentUrl, {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  // fetch(likeUrl).then((data) => { return data.json() }).then((res) => console.log(res));
 };

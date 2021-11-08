@@ -1,4 +1,5 @@
 var Post = require('../models/post');
+var Comment = require('../models/comment');
 const User = require('../models/user');
 
 var { nanoid } = require('nanoid');
@@ -8,11 +9,46 @@ var PostsController = {
   Index: function (req, res) {
     Post.aggregate([
       {
+        // Get poster for their name
         $lookup: {
           from: User.collection.name,
           localField: 'poster',
           foreignField: 'email',
           as: 'posterName'
+        }
+      },
+      {
+        $lookup: {
+          from: Comment.collection.name,
+          localField: '_id',
+          foreignField: 'postId',
+          as: 'comments'
+        }
+      },
+      {
+        $unwind: '$comments'
+      },
+      {
+        $sort: { 'comments.createdAt': -1 }
+      },
+      {
+        // {
+        //     _id : "$_id",
+        //     firstName : {$first : "$firstName"},
+        //     lastName : {$first : "$lastName"},
+        //     username : {$first : "$username"},
+        //     beenTo : {$push : "$beenTo"},
+        //     toGoTo : {$first : "$toGoTo"}
+        // }
+        $group: {
+          _id: '$_id',
+          message: { $first: '$message' },
+          poster: { $first: '$poster' },
+          posterName: { $first: '$posterName' },
+          updatedAt: { $first: '$updatedAt' },
+          createdAt: { $first: '$createdAt' },
+          likes: { $first: '$likes' },
+          comments: { $push: '$comments' }
         }
       }
     ])
@@ -21,6 +57,7 @@ var PostsController = {
         if (err) {
           throw err;
         } else {
+          console.log(aggregateRes);
           let formattedPosts = aggregateRes.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
@@ -36,14 +73,6 @@ var PostsController = {
           res.render('posts/index', { posts: formattedPosts, title: 'Posts' });
         }
       });
-
-    // Post.find(function(err, posts) {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     console.log(posts);
-    //     res.render('posts/index', { posts: posts, title: "Posts" });
-    // }).sort({ createdAt: 'desc' });
   },
 
   New: function (req, res) {
@@ -86,7 +115,7 @@ var PostsController = {
       });
     }
   },
-  Like: async function (req) {
+  Like: async function (req, res) {
     const likerEmail = req.session.user.email;
     const postId = req.body.postId;
     const postLikes = await Post.findOne({ _id: postId }).then(post => {
@@ -95,13 +124,13 @@ var PostsController = {
     if (postLikes.includes(likerEmail)) {
       Post.updateOne({ _id: postId }, { $pull: { likes: likerEmail } }).then(
         response => {
-          return response;
+          res.send(response);
         }
       );
     } else {
       Post.updateOne({ _id: postId }, { $push: { likes: likerEmail } }).then(
         response => {
-          return response;
+          res.send(response);
         }
       );
     }
