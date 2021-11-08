@@ -59,16 +59,15 @@ describe('Creating posts', function () {
       .and('not.contains', '/images/post_imgs/panda.jpg');
   });
 
-  it("records a post with relevant user name", () => {
-    // cy.logOutUser();
+  it('records a post with relevant user name', () => {
     cy.visitSignUpPage();
-    cy.signUpNewUser("Hermione Granger", "hermione");
+    cy.signUpNewUser('Hermione Granger', 'hermione');
 
-    cy.visit("/posts/new");
-    cy.get("#new-post-form").find('[type="text"]').type("Panda");
-    cy.get("#new-post-form").find('[type="file"]').attachFile("../panda.jpg");
-    cy.get("#new-post-form").submit();
+    cy.visit('/posts/new');
+    cy.get('#new-post-form').find('[type="text"]').type('Panda');
+    cy.get('#new-post-form').find('[type="file"]').attachFile('../panda.jpg');
+    cy.get('#new-post-form').submit();
 
-    cy.get(".posts").should("contain", "Hermione Granger");
+    cy.get('.posts').should('contain', 'Hermione Granger');
   });
 });
