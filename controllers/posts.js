@@ -36,7 +36,11 @@ var PostsController = {
               postLiked: post.likes.includes(req.session.user.email)
             };
           });
-          res.render('posts/index', { posts: formattedPosts, title: 'Posts' });
+          res.render('posts/index', {
+            posts: formattedPosts,
+            title: 'Posts',
+            user: req.session.user
+          });
         }
       });
 

@@ -1,5 +1,5 @@
 describe('Creating posts', function () {
-  before(async function() {
+  before(async function () {
     await cy.task('db:drop:all');
   });
 
