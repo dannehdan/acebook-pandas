@@ -1,7 +1,6 @@
 describe('Creating posts', function () {
-  before(async done => {
+  before(async function() {
     await cy.task('db:drop:all');
-    done();
   });
 
   it('stops non-logged in user from viewing posts', function () {

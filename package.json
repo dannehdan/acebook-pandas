@@ -13,6 +13,7 @@
     "test:integration": "cypress run",
     "cy:run": "cypress run",
     "prepare": "husky install"
+
   },
   "engines": {
     "node": ">=12.14.1"
@@ -32,19 +33,19 @@
     "mongoose": "^5.8.11",
     "morgan": "~1.9.1",
     "nanoid": "^3.1.30",
-    "nodemon": "^1.19.4"
+    "nodemon": "^2.0.14"
   },
   "devDependencies": {
-    "cypress": "^3.8.3",
+    "cypress": "^8.7.0",
     "cypress-file-upload": "^5.0.8",
-    "eslint": "^6.8.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-cypress": "^2.8.1",
     "eslint-plugin-jest": "^22.21.0",
     "eslint-plugin-node": "^10.0.0",
     "express-busboy": "^8.0.0",
     "express-fileupload": "^1.2.1",
     "husky": "^7.0.4",
-    "jest": "^24.9.0",
+    "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
     "prettier": "2.4.1",
     "pretty-quick": "^3.1.1"
@@ -52,6 +53,10 @@
   "nodemonConfig": {
     "ext": "js,hbs"
   },
+  "eslintIgnore": [
+    ".nodemodules/",
+    "bin/"
+  ],
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
