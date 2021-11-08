@@ -1,7 +1,6 @@
 describe('Creating posts', function () {
-  beforeEach(async done => {
+  beforeEach(async function() {
     await cy.task('db:drop:all');
-    done();
   });
 
   // eslint-disable-next-line cypress/no-async-tests
