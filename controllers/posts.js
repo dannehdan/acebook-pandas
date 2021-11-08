@@ -26,7 +26,7 @@ var PostsController = {
             post.dateString = timeDifference(date);
             return {...post, posterName: post.posterName[0] ? post.posterName[0].name : "Unknown User"};
           });
-          res.render("posts/index", { posts: formattedPosts, title: "Posts" });
+          res.render("posts/index", { posts: formattedPosts, title: "Posts", user: req.session.user });
         }
       });
 
