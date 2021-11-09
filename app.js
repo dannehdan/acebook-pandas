@@ -1,7 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-// var fileUpload = require('express-fileupload');
+var fileUpload = require('express-fileupload');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -26,11 +26,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-// app.use(
-//   fileUpload({
-//     limits: { fileSize: 1024 * 1024 }
-//   })
-// );
+app.use(
+  fileUpload({
+    limits: { fileSize: 1024 * 1024 }
+  })
+);
 
 app.use(
   session({
