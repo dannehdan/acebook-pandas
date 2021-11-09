@@ -59,7 +59,7 @@ var PostsController = {
 
   Create: function (req, res) {
     req.body.poster = req.session.user.email;
-    // console.log(req.body.poster);
+    console.log('Logging Body: ', req);
 
     if (req.files && req.files.image) {
       const img = req.files.image;
