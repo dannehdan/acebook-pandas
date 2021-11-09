@@ -57,6 +57,7 @@ var PostsController = {
               return new Date(b.createdAt) - new Date(a.createdAt);
             });
             post.comments.forEach(comment => {
+              comment.toCollapse = post.comments.indexOf(comment) > 1;
               comment.commentLiked = comment.likes.includes(
                 req.session.user.email
               );

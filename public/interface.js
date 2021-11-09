@@ -140,3 +140,36 @@ var toggleCommenting = id => {
       'Add comment';
   }
 };
+
+// eslint-disable-next-line no-unused-vars
+var showMoreComments = id => {
+  document
+    .getElementById(`comments-for-${id}`)
+    .querySelectorAll('.comment-div')
+    .forEach(comment => (comment.style.display = 'block'));
+
+  const showMoreCommentsButton = document.getElementById(
+    `show-more-comments-for-${id}`
+  ).innerText;
+
+  if (showMoreCommentsButton === 'Show less comments') {
+    document
+      .getElementById(`comments-for-${id}`)
+      .querySelectorAll('.comment-div')
+      .forEach(
+        comment =>
+          (comment.style.display = comment.classList.contains('collapseComment')
+            ? 'none'
+            : 'block')
+      );
+    document.getElementById(`show-more-comments-for-${id}`).innerText =
+      'Show more comments';
+  } else {
+    document
+      .getElementById(`comments-for-${id}`)
+      .querySelectorAll('.comment-div')
+      .forEach(comment => (comment.style.display = 'block'));
+    document.getElementById(`show-more-comments-for-${id}`).innerText =
+      'Show less comments';
+  }
+};
