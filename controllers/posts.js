@@ -24,43 +24,44 @@ var PostsController = {
           foreignField: 'postId',
           as: 'comments'
         }
-      },
-      {
-        $unwind: '$comments'
-      },
-      {
-        $sort: { 'comments.createdAt': -1 }
-      },
-      {
-        // {
-        //     _id : "$_id",
-        //     firstName : {$first : "$firstName"},
-        //     lastName : {$first : "$lastName"},
-        //     username : {$first : "$username"},
-        //     beenTo : {$push : "$beenTo"},
-        //     toGoTo : {$first : "$toGoTo"}
-        // }
-        $group: {
-          _id: '$_id',
-          message: { $first: '$message' },
-          poster: { $first: '$poster' },
-          posterName: { $first: '$posterName' },
-          updatedAt: { $first: '$updatedAt' },
-          createdAt: { $first: '$createdAt' },
-          likes: { $first: '$likes' },
-          comments: { $push: '$comments' }
-        }
       }
+      // {
+      //     $unwind: '$comments'
+      // },
+      // {
+      //     $sort: { 'comments.createdAt': -1 }
+      // },
+      // {
+      //     $group: {
+      //         _id: '$_id',
+      //         message: { $first: '$message' },
+      //         poster: { $first: '$poster' },
+      //         posterName: { $first: '$posterName' },
+      //         updatedAt: { $first: '$updatedAt' },
+      //         createdAt: { $first: '$createdAt' },
+      //         likes: { $first: '$likes' },
+      //         comments: { $push: '$comments' },
+      //         imageLink: { $first: "$imageLink" }
+      //     }
+      // }
     ])
       .sort({ createdAt: 'desc' })
       .exec(function (err, aggregateRes) {
         if (err) {
           throw err;
         } else {
-          console.log(aggregateRes);
           let formattedPosts = aggregateRes.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
+            post.comments = post.comments.sort((a, b) => {
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+            post.comments.forEach(comment => {
+              comment.commentLiked = comment.likes.includes(
+                req.session.user.email
+              );
+              comment.commentLikes = comment.likes.length;
+            });
             return {
               ...post,
               posterName: post.posterName[0]

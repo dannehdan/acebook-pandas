@@ -11,5 +11,6 @@ router.get('/new', PostsController.New);
 // todo CRUD the link - PATCH /:post_id/like
 router.patch('/testLikes', PostsController.Like);
 router.post('/testComments', CommentsController.Create);
+router.patch('/testCommentsLike', CommentsController.Like);
 
 module.exports = router;

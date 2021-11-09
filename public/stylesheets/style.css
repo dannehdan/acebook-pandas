@@ -220,3 +220,10 @@ input[type='submit']:not(.navbar input[type='submit']) {
 .like-counter {
   transform: translate(0%, 50%);
 }
+
+.comment-div {
+  margin: 30px 0px 10px 0px;
+  padding: 5px;
+  border: solid;
+  border-radius: 5px;
+}

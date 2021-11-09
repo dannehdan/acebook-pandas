@@ -3,19 +3,20 @@ var Comment = require('../models/comment');
 var CommentsController = {
   Create: function (req, res) {
     req.body.poster = req.session.user.email;
-    // console.log(req.body.poster);
+    console.log(req.body.message);
     const comment = new Comment(req.body);
 
     comment.save(err => {
       if (err) {
         throw err;
       }
-      res.status(201).send({ message: 'Comment Added' });
+      //  res.status(201).send({ message: 'Comment Added' });
+      res.redirect('/posts');
     });
   },
   Like: async function (req, res) {
     const likerEmail = req.session.user.email;
-    const commentId = req.body.postId;
+    const commentId = req.body.commentId;
     const commentLikes = await Comment.findOne({ _id: commentId }).then(
       comment => {
         return comment.likes;
