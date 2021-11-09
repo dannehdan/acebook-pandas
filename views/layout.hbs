@@ -41,7 +41,9 @@
           class='navbar-brand mt-lg-0 brand-name'
           href='/'
           style='margin-left: 8px; margin-right: 8px;'
-        >Acebook</a>
+        >
+        Acebook
+        </a>
         <button
           class='navbar-toggler'
           type='button'
@@ -80,8 +82,9 @@
                     id='logout-button'
                     href='#'
                     onclick="document.getElementById('logout-form').submit(); return false;"
-                  >Log Out</a>
-                  {{! <input type="submit" value="Log Out" style="display: none;" /> }}
+                  >
+                    Log Out
+                  </a>
                 </form>
               </li>
               <li class='nav-item'>
@@ -104,8 +107,8 @@
         </div>
       </div>
     </nav>
-    <div class='container'>
-      {{#if message}}
+    {{#if message}}
+      <div class='container'>
         <div
           class="alert alert-{{message.type}}"
           id="after-login-alert"
@@ -123,8 +126,8 @@
             {{message.message}}
           </p>
         </div>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
     {{{body}}}
   </body>
 </html>
