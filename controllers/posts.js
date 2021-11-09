@@ -18,6 +18,7 @@ var PostsController = {
         }
       },
       {
+        // Get comments linked to post
         $lookup: {
           from: Comment.collection.name,
           localField: '_id',
@@ -26,7 +27,10 @@ var PostsController = {
         }
       }
       // {
-      //     $unwind: '$comments'
+      //     $unwind: {
+      //         "path": '$comments',
+      //         "preserveNullAndEmptyArrays": true
+      //     }
       // },
       // {
       //     $sort: { 'comments.createdAt': -1 }
@@ -56,12 +60,24 @@ var PostsController = {
             post.comments = post.comments.sort((a, b) => {
               return new Date(b.createdAt) - new Date(a.createdAt);
             });
-            post.comments.forEach(comment => {
+            post.comments.forEach(async comment => {
+              let date = new Date(comment.createdAt);
+              comment.dateString = timeDifference(date);
               comment.commentLiked = comment.likes.includes(
                 req.session.user.email
               );
               comment.commentLikes = comment.likes.length;
+              comment.posterInfo = await User.findOne({
+                email: comment.poster
+              }).exec();
+              if (comment.posterInfo == null) {
+                comment.posterInfo = {
+                  name: 'Unknown User'
+                };
+              }
+              comment.posterName = comment.posterInfo.name;
             });
+
             return {
               ...post,
               posterName: post.posterName[0]
@@ -81,6 +97,7 @@ var PostsController = {
   },
 
   Create: function (req, res) {
+    // console.log(req);
     req.body.poster = req.session.user.email;
     // console.log(req.body.poster);
 
