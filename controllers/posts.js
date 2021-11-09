@@ -62,6 +62,7 @@ var PostsController = {
               );
               comment.commentLikes = comment.likes.length;
             });
+            post.likes = post.likes === undefined ? [] : post.likes;
             return {
               ...post,
               posterName: post.posterName[0]
