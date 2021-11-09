@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var PostSchema = new mongoose.Schema(
   {
-    message: String,
+    message: { type: String, default: 'no message given' },
     imageLink: String,
     poster: String,
     likes: Array
