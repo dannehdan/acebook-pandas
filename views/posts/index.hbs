@@ -1,4 +1,20 @@
-<a class='new-post-link' href='/posts/new'>New post</a>
+{{!-- <a class='new-post-link' href='/posts/new'>New post</a> --}}
+<div class='new-post-container mx-auto'>
+  <div class='new-post'>
+    <form
+      id='new-post-form'
+      action='/posts'
+      method='post'
+      enctype='multipart/form-data'
+    >
+      <label for='message'>Message: </label>
+      <input id='message' type='text' name='message' value='' />
+      <label for='image'>Image: </label>
+      <input id='post-img' type='file' name='image' accept='.png, .jpg, .jpeg' />
+      <input type='submit' value='Submit' />
+    </form>
+  </div>
+</div>
 <h1>Timeline</h1>
 <main class='posts'>
   {{#each posts}}
