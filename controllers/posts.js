@@ -7,11 +7,38 @@ const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 
 const fs = require('fs');
+const os = require('os');
+
+const { nanoid } = require('nanoid');
+
+const fetch = require('node-fetch');
+
+const createCredentialsJSON = async function () {
+  if (process.env.GCLOUD_ACCESS_LINK) {
+    // console.log(process.env.GCLOUD_ACCESS_TOKEN)
+    fetch(process.env.GCLOUD_ACCESS_LINK)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        fs.writeFile(
+          path.join(os.tmpdir(), 'credentials.json'),
+          JSON.stringify(data),
+          function (err) {
+            if (err) console.error('error', err);
+          }
+        );
+      });
+  }
+};
+
+createCredentialsJSON();
+
+console.log(path.resolve(os.tmpdir(), 'credentials.json'));
 
 const gc = new Storage({
-  keyFilename:
-    process.env.GCLOUD_ACCESS_TOKEN ||
-    path.resolve('', 'acebook-pandas-058c2fa6bf72.json'),
+  // keyFilename: process.env.GCLOUD_ACCESS_TOKEN ? path.resolve(os.tmpdir(), "credentials.json") : path.resolve('', 'acebook-pandas-058c2fa6bf72.json'),
+  keyFilename: path.resolve(os.tmpdir(), 'credentials.json'),
   projectId: 'acebook-pandas'
 });
 
@@ -30,8 +57,8 @@ const acebookBucket = gc.bucket('acebook-pandas-images');
 
 async function uploadImage(image) {
   console.log(image);
-  console.log(fs.existsSync(path.join(__dirname, '../..', image.path)));
-  await acebookBucket.upload(path.join(__dirname, '../..', image.path), {
+  console.log(fs.existsSync(path.join(image.path)));
+  await acebookBucket.upload(image.path, {
     destination: `post-images/${image.name}`
   });
   const imagePath = `http://acebook-pandas-images.storage.googleapis.com/post-images/${image.name}`;
@@ -99,6 +126,12 @@ var PostsController = {
 
     if (req.files && req.files.image && req.files.image.size) {
       const img = req.files.image;
+
+      img.name = img.name.replaceAll(/\s/g, '_');
+      // keep image extension (like .jpeg) to later append onto the unique image name
+      const imageNameExtension = img.name.split('.')[1];
+      // nanoid returns random string, and append the original image extension onto it
+      img.name = `${nanoid()}.${imageNameExtension}`;
 
       uploadImage(img)
         .then(response => {
