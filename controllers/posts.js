@@ -25,35 +25,71 @@ var PostsController = {
           foreignField: 'postId',
           as: 'comments'
         }
+      },
+      {
+        $unwind: {
+          path: '$comments',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: User.collection.name,
+          localField: 'comments.poster',
+          foreignField: 'email',
+          as: 'comments.commenterInfo'
+        }
+      },
+      {
+        $sort: { 'comments.createdAt': -1 }
+      },
+      {
+        $group: {
+          _id: '$_id',
+          message: { $first: '$message' },
+          poster: { $first: '$poster' },
+          posterName: { $first: '$posterName' },
+          updatedAt: { $first: '$updatedAt' },
+          createdAt: { $first: '$createdAt' },
+          likes: { $first: '$likes' },
+          comments: { $push: '$comments' },
+          imageLink: { $first: '$imageLink' }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          message: 1,
+          poster: 1,
+          posterName: 1,
+          updatedAt: 1,
+          createdAt: 1,
+          likes: 1,
+          imageLink: 1,
+          // comments: 1
+          comments: {
+            $filter: {
+              input: '$comments',
+              as: 'c',
+              cond: { $ifNull: ['$$c._id', false] }
+            }
+          }
+        }
       }
-      // {
-      //     $unwind: {
-      //         "path": '$comments',
-      //         "preserveNullAndEmptyArrays": true
-      //     }
-      // },
-      // {
-      //     $sort: { 'comments.createdAt': -1 }
-      // },
-      // {
-      //     $group: {
-      //         _id: '$_id',
-      //         message: { $first: '$message' },
-      //         poster: { $first: '$poster' },
-      //         posterName: { $first: '$posterName' },
-      //         updatedAt: { $first: '$updatedAt' },
-      //         createdAt: { $first: '$createdAt' },
-      //         likes: { $first: '$likes' },
-      //         comments: { $push: '$comments' },
-      //         imageLink: { $first: "$imageLink" }
-      //     }
-      // }
     ])
       .sort({ createdAt: 'desc' })
       .exec(function (err, aggregateRes) {
         if (err) {
           throw err;
         } else {
+          // console.log(aggregateRes.map(post => {
+          // let comments = post.comments;
+          // let commenters = [];
+          // comments.forEach(function(comment) {
+          //     commenters.push(JSON.stringify(comment.commenterInfo));
+          // });
+          // return commenters;
+          // }));
           let formattedPosts = aggregateRes.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
@@ -67,22 +103,23 @@ var PostsController = {
                 req.session.user.email
               );
               comment.commentLikes = comment.likes.length;
-              comment.posterInfo = await User.findOne({
-                email: comment.poster
-              }).exec();
-              if (comment.posterInfo == null) {
-                comment.posterInfo = {
-                  name: 'Unknown User'
-                };
+              // comment.posterInfo = await User.findOne({
+              //     email: comment.poster
+              // }).exec();
+              console.log(comment.commenterInfo);
+
+              if (comment.commenterInfo.length < 1) {
+                comment.commenterName = 'Anonymous';
+              } else {
+                comment.commenterName = comment.commenterInfo[0].name;
               }
-              comment.posterName = comment.posterInfo.name;
             });
 
             return {
               ...post,
               posterName: post.posterName[0]
                 ? post.posterName[0].name
-                : 'Unknown User',
+                : 'Anonymous',
               postLikes: post.likes.length,
               postLiked: post.likes.includes(req.session.user.email)
             };
