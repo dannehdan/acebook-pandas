@@ -3,7 +3,7 @@
 <main class='posts'>
     {{#each posts}}
 
-    <div class='card mx-auto'>
+    <div class='card mx-auto post-div' id="post-{{this._id}}">
         <div class='card-body'>
             <div class='d-flex'>
                 <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
@@ -89,9 +89,25 @@
                 </div>
             </div>
             {{/each}}
-            <button id="show-more-comments-for-{{this._id}}" onclick="showMoreComments('{{this._id}}')">Show more comments</button>
+            
+            {{#if this.needsCommentExpander}}
+              <button id="show-more-comments-for-{{this._id}}" onclick="showMoreComments('{{this._id}}')">Show more comments</button>
+            {{/if}}
         </div>
     </div>
     {{/each}}
+
+    {{#if scrollToComment}}
+    <script>
+      console.log
+      var comment = document.getElementById("comment-"+ "{{scrollToComment}}");
+      var post = comment.closest(".post-div");
+
+      const yOffset = -10;
+      const y = post.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'auto'});
+      
+    </script>
+    {{/if}}
     <script src='interface.js'></script>
 </main>

@@ -7,6 +7,9 @@ var timeDifference = require('../js_helpers');
 
 var PostsController = {
   Index: function (req, res) {
+    var scrollTo = req.query.scroll_to;
+    // console.log("Scroll:", scrollTo);
+
     Post.aggregate([
       {
         // Get poster for their name
@@ -93,6 +96,7 @@ var PostsController = {
           let formattedPosts = aggregateRes.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
+
             post.comments = post.comments.sort((a, b) => {
               return new Date(b.createdAt) - new Date(a.createdAt);
             });
@@ -107,7 +111,7 @@ var PostsController = {
               // comment.posterInfo = await User.findOne({
               //     email: comment.poster
               // }).exec();
-              console.log(comment.commenterInfo);
+              // console.log(comment.commenterInfo);
 
               if (comment.commenterInfo.length < 1) {
                 comment.commenterName = 'Anonymous';
@@ -115,6 +119,8 @@ var PostsController = {
                 comment.commenterName = comment.commenterInfo[0].name;
               }
             });
+            post.needsCommentExpander = post.comments.length > 2;
+
             post.likes = post.likes === undefined ? [] : post.likes;
             return {
               ...post,
@@ -125,7 +131,12 @@ var PostsController = {
               postLiked: post.likes.includes(req.session.user.email)
             };
           });
-          res.render('posts/index', { posts: formattedPosts, title: 'Posts' });
+          const resParams = { posts: formattedPosts, title: 'Posts' };
+          if (scrollTo) {
+            resParams.scrollToComment = scrollTo;
+          }
+
+          res.render('posts/index', resParams);
         }
       });
   },

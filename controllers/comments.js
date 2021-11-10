@@ -10,8 +10,10 @@ var CommentsController = {
       if (err) {
         throw err;
       }
+
+      var commentId = encodeURIComponent(comment._id);
       //  res.status(201).send({ message: 'Comment Added' });
-      res.redirect('/posts');
+      res.redirect('/posts?scroll_to=' + commentId);
     });
   },
   Like: async function (req, res) {
