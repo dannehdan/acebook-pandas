@@ -29,6 +29,7 @@ const acebookBucket = gc.bucket('acebook-pandas-images');
 // }
 
 async function uploadImage(image) {
+  console.log(image);
   await acebookBucket.upload(image.path, {
     destination: `post-images/${image.name}`
   });
