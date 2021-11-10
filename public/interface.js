@@ -123,3 +123,53 @@ var addComment = id => {
       console.error('Error:', error);
     });
 };
+
+// eslint-disable-next-line no-unused-vars
+var toggleCommenting = id => {
+  const showButton = document.getElementById(
+    `comment-toggle-text-${id}`
+  ).innerText;
+
+  if (showButton === 'Add comment') {
+    document.getElementById(`comment-box-${id}`).style.display = 'block';
+    document.getElementById(`comment-toggle-text-${id}`).innerText =
+      'Hide comment';
+  } else {
+    document.getElementById(`comment-box-${id}`).style.display = 'none';
+    document.getElementById(`comment-toggle-text-${id}`).innerText =
+      'Add comment';
+  }
+};
+
+// eslint-disable-next-line no-unused-vars
+var showMoreComments = id => {
+  document
+    .getElementById(`comments-for-${id}`)
+    .querySelectorAll('.comment-div')
+    .forEach(comment => (comment.style.display = 'block'));
+
+  const showMoreCommentsButton = document.getElementById(
+    `show-more-comments-for-${id}`
+  ).innerText;
+
+  if (showMoreCommentsButton === 'Show less comments') {
+    document
+      .getElementById(`comments-for-${id}`)
+      .querySelectorAll('.comment-div')
+      .forEach(
+        comment =>
+          (comment.style.display = comment.classList.contains('collapseComment')
+            ? 'none'
+            : 'block')
+      );
+    document.getElementById(`show-more-comments-for-${id}`).innerText =
+      'Show more comments';
+  } else {
+    document
+      .getElementById(`comments-for-${id}`)
+      .querySelectorAll('.comment-div')
+      .forEach(comment => (comment.style.display = 'block'));
+    document.getElementById(`show-more-comments-for-${id}`).innerText =
+      'Show less comments';
+  }
+};

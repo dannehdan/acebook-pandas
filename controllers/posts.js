@@ -96,9 +96,10 @@ var PostsController = {
             post.comments = post.comments.sort((a, b) => {
               return new Date(b.createdAt) - new Date(a.createdAt);
             });
-            post.comments.forEach(async comment => {
+            post.comments.forEach(comment => {
               let date = new Date(comment.createdAt);
               comment.dateString = timeDifference(date);
+              comment.toCollapse = post.comments.indexOf(comment) > 1;
               comment.commentLiked = comment.likes.includes(
                 req.session.user.email
               );
@@ -114,7 +115,7 @@ var PostsController = {
                 comment.commenterName = comment.commenterInfo[0].name;
               }
             });
-
+            post.likes = post.likes === undefined ? [] : post.likes;
             return {
               ...post,
               posterName: post.posterName[0]
