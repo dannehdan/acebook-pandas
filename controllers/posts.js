@@ -96,7 +96,7 @@ var PostsController = {
   Create: function (req, res) {
     req.body.poster = req.session.user.email;
 
-    if (req.files && req.files.image) {
+    if (req.files && req.files.image && req.files.image.size) {
       const img = req.files.image;
 
       uploadImage(img)
@@ -119,6 +119,7 @@ var PostsController = {
         .catch(e => console.error('Error here actually', e));
     } else {
       const post = new Post(req.body);
+      fs.rmSync(req.files.image.path);
       post.save(err => {
         if (err) {
           throw err;
