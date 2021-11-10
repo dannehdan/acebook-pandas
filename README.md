@@ -1,9 +1,8 @@
 # Acebook
 
-This is a Node.js template for the Acebook engineering project.
+This is a Node.js Acebook engineering project by pandas team.
 
 It uses:
-
 - [Express](https://expressjs.com/) web framework for Node.js.
 - [Nodemon](https://nodemon.io/) to reload the server automatically.
 - [Handlebars](https://handlebarsjs.com/) to render view templates.
@@ -11,22 +10,30 @@ It uses:
 - [ESLint](https://eslint.org) for linting.
 - [Jest](https://jestjs.io/) for testing.
 - [Cypress](https://www.cypress.io/) for end-to-end testing.
+- [Husky](https://typicode.github.io/husky/) for pre-commit hook.
+- [Prettier](https://prettier.io/) to style code consistently.
+- [Bootstrap](https://getbootstrap.com/) to make UI prettier.
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) to store passwords safely.
 
 ## User Stories
 
-- As a user, so I can login, I would like to sign up
-- As a user, so I can sign up, I would like to enter info about me (DOB, bio, work, profile pic)
-- As a user, so I can access my account, I would like to login
-- As a user, so I can change accounts, I would like to log out.
-- As a user, so I can view my posts, I would like to upload posts (consisting of picture and text)
-- As a user, so I can see view other people's posts, I would like to view all posts (recent first).
-- As a user, so I can see who wrote a post, I would like to see their name and photo next to it.
-- As a user, so I can navigate the site, I would like a useful nav bar.
-- As a user, so I can support a post/comment, I want to be able to like it.
-- As a user, so I can share my opinion, I would like to add a comment to a post.
-- As a user, so I can correct my typos, I would like to edit my post/comment after posting.
-- As a user, so I can redact my opinion, I would like to delete a post/comment.
-- As a user, so everything looks good, I would like a nice UI.
+- [x] As a user, so I can access my account, I would like to login.
+- [x] As a user, so I can login, I would like to sign up.
+- [x] As a user, so I can change accounts, I would like to log out.
+- [x] As a user, so I can share my opinion, I would like to upload posts (consisting of picture and text).
+- [x] As a user, so I can read other people's thoughts, I would like to view all posts (recent first).
+- [x] As a user, so I can stay up to date, I would like to see recent posts first.
+- [x] As a user, so I can navigate the site easily, I would like to have a navigation bar.
+- [x] As a user, so I can support an opinion, I would like to add a like to the post.
+- [x] As a user, so I can change my mind, I would like to remove my like from the post.
+- [x] As a user, so I can know who wrote a post, I would like to see their name next to it.
+- [ ] As a user, so I can know who wrote a post, I would like to see their photo next to it.
+- [ ] As a user, so I can introduce myself, I would like to enter info about me (DOB, bio and photo).
+- [ ] As a user, so I can disscuss interesting topic, I would like to add a comment to a post.
+- [ ] As a user, so I can support a comment, I would like to be able to like it.
+- [ ] As a user, so I can correct my typos, I would like to edit my post or comment after posting.
+- [ ] As a user, so I can redact my opinion, I would like to delete a post or comment.
+- [ ] As a user, so everything looks good, I would like a nice UI.
 
 ## Card wall
 
@@ -86,6 +93,9 @@ It uses:
   npm run lint              # linter only
   npm run test:unit         # unit tests only
   npm run test:integration  # integration tests only
+
+  # Bonus: only one integration test
+  npm run cy:run -- --spec cypress/integration/user_likes_spec.js
   ```
 
 #### Start test server
