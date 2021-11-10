@@ -34,7 +34,7 @@ const createCredentialsJSON = async function () {
 
 createCredentialsJSON();
 
-console.log(path.resolve(os.tmpdir(), 'credentials.json'));
+// console.log(path.resolve(os.tmpdir(), 'credentials.json'));
 
 const gc = new Storage({
   keyFilename: path.resolve(os.tmpdir(), 'credentials.json'),
@@ -55,8 +55,8 @@ const acebookBucket = gc.bucket('acebook-pandas-images');
 // }
 
 async function uploadImage(image) {
-  console.log(image);
-  console.log(fs.existsSync(path.join(image.path)));
+  // console.log(image);
+  // console.log(fs.existsSync(path.join(image.path)));
   await acebookBucket.upload(image.path, {
     destination: `post-images/${image.name}`
   });
