@@ -22,6 +22,7 @@
     "aws-sdk": "^2.1024.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "connect-multiparty": "^2.2.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -36,6 +37,7 @@
     "mongodb": "^3.7.3",
     "mongoose": "^5.8.11",
     "morgan": "~1.9.1",
+    "multiparty-express": "^0.1.9",
     "nanoid": "^3.1.30",
     "nodemon": "^2.0.14"
   },

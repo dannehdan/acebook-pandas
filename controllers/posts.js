@@ -1,15 +1,12 @@
 var Post = require('../models/post');
 const User = require('../models/user');
 
-var { nanoid } = require('nanoid');
 var timeDifference = require('../js_helpers');
 
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 
-const os = require('os');
-const appPrefix = 'acebook-pandas';
-const tmpDir = path.join(os.tmpdir(), appPrefix);
+const fs = require('fs');
 
 const gc = new Storage({
   keyFilename:
@@ -20,53 +17,27 @@ const gc = new Storage({
 
 const acebookBucket = gc.bucket('acebook-pandas-images');
 
-async function uploadFile(file) {
-  await acebookBucket.upload(path.join(tmpDir, file.name), {
-    destination: `post-images/${file.name}`
+// async function uploadFile(file) {
+//     await acebookBucket.upload(path.join(tmpDir, file.name), {
+//         destination: `post-images/${file.name}`
+//     });
+//     const filePath = `http://acebook-pandas-images.storage.googleapis.com/post-images/${file.name}`;
+
+//     console.log(`file uploaded to ${filePath}`);
+
+//     return filePath;
+// }
+
+async function uploadImage(image) {
+  await acebookBucket.upload(image.path, {
+    destination: `post-images/${image.name}`
   });
-  const filePath = `http://acebook-pandas-images.storage.googleapis.com/post-images/${file.name}`;
+  const imagePath = `http://acebook-pandas-images.storage.googleapis.com/post-images/${image.name}`;
 
-  console.log(`file uploaded to ${filePath}`);
+  console.log(`file uploaded to ${imagePath}`);
 
-  return filePath;
+  return imagePath;
 }
-
-// eslint-disable-next-line node/no-extraneous-require
-// var request = require('request');
-
-// var stream = require("stream");
-
-// var imgur = {
-//     _clientID: "50568a11aeca3cf",
-//     upload: async function(_image, _cb) {
-//         console.log("hi");
-//         if (this._clientID && _image) {
-//             var options = {
-//                 url: 'https://api.imgur.com/3/upload',
-//                 headers: {
-//                     'Authorization': 'Client-ID ' + this._clientID
-//                 }
-//             };
-//             var post = request.post(options, function(err, req, body) {
-//                 try {
-//                     console.log(body);
-//                     _cb(err, JSON.parse(body));
-//                 } catch (e) {
-//                     _cb(err, body);
-//                 }
-//             });
-//             var upload = post.form();
-//             upload.append('type', 'file');
-
-//             const readable = new stream.Readable()
-//             readable._read = () => {} // _read is required but you can noop it
-//             readable.push(_image.data)
-//             readable.push(null)
-
-//             upload.append('image', readable);
-//         }
-//     }
-// };
 
 var PostsController = {
   Index: function (req, res) {
@@ -123,45 +94,28 @@ var PostsController = {
 
   Create: function (req, res) {
     req.body.poster = req.session.user.email;
-    // console.log(req.body.poster);
 
     if (req.files && req.files.image) {
       const img = req.files.image;
-      console.log(img);
 
-      // imgur.upload(img, function(err, res) {
-      //     console.log(res.data.link); //log the imgur url
-      // });
+      uploadImage(img)
+        .then(response => {
+          console.log('Upload path is: ' + response);
+          req.body.imageLink = response;
+          const post = new Post(req.body);
 
-      img.name = img.name.replaceAll(/\s/g, '_');
-      // keep image extension (like .jpeg) to later append onto the unique image name
-      const imageNameExtension = img.name.split('.')[1];
-      // nanoid returns random string, and append the original image extension onto it
-      img.name = `${nanoid()}.${imageNameExtension}`;
+          fs.rmSync(img.path);
 
-      const uploadPath = `${img.name}`;
+          post.save(function (err) {
+            if (err) {
+              console.log('Error here!');
+              throw err;
+            }
 
-      img.mv(`${tmpDir}/${uploadPath}`, function (err) {
-        if (err) {
-          return res.status(500).send(err);
-        }
-
-        uploadFile(img)
-          .then(response => {
-            console.log('Upload path is: ' + response);
-            req.body.imageLink = response;
-            const post = new Post(req.body);
-
-            post.save(function (err) {
-              if (err) {
-                throw err;
-              }
-
-              res.status(201).redirect('/posts');
-            });
-          })
-          .catch(e => console.error(e));
-      });
+            res.status(201).redirect('/posts');
+          });
+        })
+        .catch(e => console.error('Error here actually', e));
     } else {
       const post = new Post(req.body);
       post.save(err => {

@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-const fileUpload = require('express-fileupload');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -14,11 +13,9 @@ const fs = require('fs');
 
 const appPrefix = 'acebook-pandas';
 
-let tmpDir;
-
 try {
   if (!fs.existsSync(path.join(os.tmpdir(), appPrefix))) {
-    tmpDir = fs.mkdirSync(path.join(os.tmpdir(), appPrefix), {
+    fs.mkdirSync(path.join(os.tmpdir(), appPrefix), {
       recursive: true
     });
   }
@@ -27,11 +24,6 @@ try {
   console.error('Error: ' + err);
   // handle error
 }
-
-// eslint-disable-next-line no-unused-vars
-const getTempDir = () => {
-  return tmpDir;
-};
 
 var homeRouter = require('./routes/home');
 var postsRouter = require('./routes/posts');
@@ -51,11 +43,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(
-  fileUpload({
-    limits: { fileSize: 1024 * 1024 }
-  })
-);
 
 app.use(
   session({
