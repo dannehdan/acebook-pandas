@@ -13,12 +13,13 @@
     "test:integration": "cypress run",
     "cy:run": "cypress run",
     "prepare": "husky install"
-
   },
   "engines": {
     "node": ">=12.14.1"
   },
   "dependencies": {
+    "@google-cloud/storage": "^5.16.0",
+    "aws-sdk": "^2.1024.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
@@ -28,6 +29,8 @@
     "express-session": "^1.17.2",
     "hbs": "^4.1.0",
     "http-errors": "~1.6.3",
+    "imgur": "^1.0.2",
+    "imgur-upload": "^0.1.2",
     "method-override": "^3.0.0",
     "mongo": "^0.1.0",
     "mongodb": "^3.7.3",

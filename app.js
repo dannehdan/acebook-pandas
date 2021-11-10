@@ -8,6 +8,31 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
 
+const os = require('os');
+const fs = require('fs');
+// console.log(os.tmpdir());
+
+const appPrefix = 'acebook-pandas';
+
+let tmpDir;
+
+try {
+  if (!fs.existsSync(path.join(os.tmpdir(), appPrefix))) {
+    tmpDir = fs.mkdirSync(path.join(os.tmpdir(), appPrefix), {
+      recursive: true
+    });
+  }
+  // the rest of your app goes here
+} catch (err) {
+  console.error('Error: ' + err);
+  // handle error
+}
+
+// eslint-disable-next-line no-unused-vars
+const getTempDir = () => {
+  return tmpDir;
+};
+
 var homeRouter = require('./routes/home');
 var postsRouter = require('./routes/posts');
 var sessionsRouter = require('./routes/sessions');
