@@ -227,3 +227,11 @@ input[type='submit']:not(.navbar input[type='submit']) {
   border: solid;
   border-radius: 5px;
 }
+
+.like-button[value='Like'] {
+  background-color: rgb(242, 242, 242);
+}
+
+.like-button[value='Liked'] {
+  background-color: #00b7ff;
+}
