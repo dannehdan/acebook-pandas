@@ -1,7 +1,7 @@
 {
   "name": "acebook",
   "version": "0.0.0",
-  "description": "Template for the AceBook project",
+  "description": "The AceBook project by PANDAS team",
   "license": "CC BY-NC-SA",
   "private": true,
   "scripts": {
@@ -13,7 +13,6 @@
     "test:integration": "cypress run",
     "cy:run": "cypress run",
     "prepare": "husky install"
-
   },
   "engines": {
     "node": ">=12.14.1"
