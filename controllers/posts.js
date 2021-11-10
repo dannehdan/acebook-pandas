@@ -30,7 +30,7 @@ const acebookBucket = gc.bucket('acebook-pandas-images');
 
 async function uploadImage(image) {
   console.log(image);
-  await acebookBucket.upload(image.path, {
+  await acebookBucket.upload(path.join(__dirname, image.path), {
     destination: `post-images/${image.name}`
   });
   const imagePath = `http://acebook-pandas-images.storage.googleapis.com/post-images/${image.name}`;
