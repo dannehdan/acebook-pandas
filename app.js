@@ -14,7 +14,10 @@ const fs = require('fs');
 const appPrefix = 'acebook-pandas';
 
 try {
-  if (!fs.existsSync(path.join(os.tmpdir(), appPrefix))) {
+  if (
+    !fs.existsSync(path.join(os.tmpdir(), appPrefix)) ||
+    process.env.ENV == 'heroku'
+  ) {
     fs.mkdirSync(path.join(os.tmpdir(), appPrefix), {
       recursive: true
     });
