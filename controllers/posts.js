@@ -37,7 +37,6 @@ createCredentialsJSON();
 console.log(path.resolve(os.tmpdir(), 'credentials.json'));
 
 const gc = new Storage({
-  // keyFilename: process.env.GCLOUD_ACCESS_TOKEN ? path.resolve(os.tmpdir(), "credentials.json") : path.resolve('', 'acebook-pandas-058c2fa6bf72.json'),
   keyFilename: path.resolve(os.tmpdir(), 'credentials.json'),
   projectId: 'acebook-pandas'
 });

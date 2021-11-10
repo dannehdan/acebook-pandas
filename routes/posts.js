@@ -1,12 +1,5 @@
-// const os = require('os');
-// const path = require('path');
-// const appPrefix = 'acebook-pandas';
-
-// const tmpDir = path.join(os.tmpdir());
-
 var multiparty = require('connect-multiparty'),
   multipartyMiddleware = multiparty();
-// multipartyMiddleware = multiparty({ uploadDir: os.tmpdir() });
 
 var express = require('express');
 var router = express.Router();
