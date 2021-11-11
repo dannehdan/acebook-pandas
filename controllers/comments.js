@@ -22,11 +22,10 @@ var CommentsController = {
         return comment.likes;
       }
     );
-    const action = commentLikes.includes(likerEmail) ? { $pull: { likes: likerEmail } } : { $push: { likes: likerEmail } };
-    Comment.updateOne(
-      { _id: commentId },
-      action
-    ).then(response => {
+    const action = commentLikes.includes(likerEmail)
+      ? { $pull: { likes: likerEmail } }
+      : { $push: { likes: likerEmail } };
+    Comment.updateOne({ _id: commentId }, action).then(response => {
       res.send(response);
     });
   }

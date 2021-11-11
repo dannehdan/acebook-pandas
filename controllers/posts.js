@@ -25,7 +25,8 @@ const createCredentialsJSON = async function () {
           path.join(os.tmpdir(), 'credentials.json'),
           JSON.stringify(data),
           function (err) {
-            if (err) console.error('Creating Google Cloud cregentials error:\n', err);
+            if (err)
+              console.error('Creating Google Cloud cregentials error:\n', err);
           }
         );
       });
@@ -126,20 +127,20 @@ var PostsController = {
       .sort({ createdAt: 'desc' })
       .exec(function (err, aggregateRes) {
         if (err) {
-          console.error("Posts aggregating error:\n", err);
+          console.error('Posts aggregating error:\n', err);
           throw err;
         } else {
           let formattedPosts = aggregateRes.map(post => {
             post.dateString = timeDifference(new Date(post.createdAt));
 
-            // sort comments by date 
+            // sort comments by date
             post.comments = post.comments.sort((a, b) => {
               return new Date(b.createdAt) - new Date(a.createdAt);
             });
 
             post.comments.forEach((comment, index) => {
               comment.dateString = timeDifference(new Date(comment.createdAt));
-              
+
               // hide older comments, if more than two
               comment.toCollapse = index > 1;
 
@@ -147,10 +148,12 @@ var PostsController = {
               comment.commentLiked = comment.likes.includes(
                 req.session.user.email
               );
-              
+
               comment.commentLikes = comment.likes.length;
 
-              comment.commenterName = comment.commenterInfo.length ? comment.commenterInfo[0].name : 'Anonymous';
+              comment.commenterName = comment.commenterInfo.length
+                ? comment.commenterInfo[0].name
+                : 'Anonymous';
             });
 
             post.needsCommentExpander = post.comments.length > 2;
@@ -233,11 +236,16 @@ var PostsController = {
   Like: async function (req, res) {
     const likerEmail = req.session.user.email;
     const postId = req.body.postId;
-    const postLikes = await Post.findOne({ _id: postId }).then(post => post.likes);
-    const action = postLikes.includes(likerEmail) ? { $pull: { likes: likerEmail } } : { $push: { likes: likerEmail } };
+    const postLikes = await Post.findOne({ _id: postId }).then(
+      post => post.likes
+    );
+    const action = postLikes.includes(likerEmail)
+      ? { $pull: { likes: likerEmail } }
+      : { $push: { likes: likerEmail } };
 
-    Post.updateOne({ _id: postId }, action)
-      .then(result => { res.send(result); });
+    Post.updateOne({ _id: postId }, action).then(result => {
+      res.send(result);
+    });
   }
 };
 

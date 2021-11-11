@@ -24,7 +24,7 @@ const UsersController = {
       } else {
         user.save(function (err) {
           if (err) {
-            console.error("Saving new user error:\n", err);
+            console.error('Saving new user error:\n', err);
             throw err;
           }
           req.session.message = {
