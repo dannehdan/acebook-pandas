@@ -228,6 +228,20 @@ a {
   width: 40px;
   height: 40px;
   margin-right: 10px;
+  border: solid;
+  border-color: royalblue;
+  border-width: 2px;
+  border-radius: 50%;
+}
+
+.nav-profile-photo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border: solid;
+  border-color: royalblue;
+  border-width: 2px;
+  border-radius: 50%;
 }
 
 .post-img-card {
@@ -376,4 +390,16 @@ input[type='submit']:not(.navbar input[type='submit']) {
 
 .like-button[value='Liked'] {
   background-color: #00b7ff;
+}
+
+.profile-dropdown {
+  /* background-color: #56baed;
+    background-color: #00b7ff; */
+  background-color: #00b7ff;
+  /* background-color: rgb(128, 200, 238); */
+  text-align: center;
+}
+
+body {
+  overflow-x: hidden;
 }
