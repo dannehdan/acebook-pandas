@@ -86,6 +86,7 @@
             </form>
         </div>
         <div class='comments-div' id='comments-for-{{this._id}}'>
+            <hr class="comment-divide" style="display:{{#if this.comments }}block{{else}}none{{/if}}">
             {{#each this.comments}}
             <div style="display:{{#if this.toCollapse }}none{{else}}block{{/if}}" class='{{#if this.toCollapse}}collapseComment{{/if}} comment-div container mx-auto' id='comment-{{this._id}}'>
                 <div class="row">
