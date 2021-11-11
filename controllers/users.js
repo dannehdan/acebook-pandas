@@ -41,8 +41,8 @@ var UsersController = {
 
   ViewMe: (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
-      res.render('users/user', {user: foundUser["email"]})
-    })
+      res.render('users/user', { user: foundUser['email'] });
+    });
   }
 };
 
