@@ -16,7 +16,6 @@ describe('Sign out', function () {
   });
 
   it('should have a logout button for logged in users', function () {
-    cy.visit('/');
     cy.visitSignInPage();
     cy.signInUser('freddy', '12345');
 

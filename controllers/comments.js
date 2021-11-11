@@ -3,19 +3,17 @@ var Comment = require('../models/comment');
 var CommentsController = {
   Create: function (req, res) {
     req.body.poster = req.session.user.email;
-    console.log(req.body.message);
     const comment = new Comment(req.body);
 
     comment.save(err => {
       if (err) {
         throw err;
       }
-
-      var commentId = encodeURIComponent(comment._id);
-      //  res.status(201).send({ message: 'Comment Added' });
+      const commentId = encodeURIComponent(comment._id);
       res.redirect('/posts?scroll_to=' + commentId);
     });
   },
+
   Like: async function (req, res) {
     const likerEmail = req.session.user.email;
     const commentId = req.body.commentId;
@@ -24,21 +22,12 @@ var CommentsController = {
         return comment.likes;
       }
     );
-    if (commentLikes.includes(likerEmail)) {
-      Comment.updateOne(
-        { _id: commentId },
-        { $pull: { likes: likerEmail } }
-      ).then(response => {
-        res.send(response);
-      });
-    } else {
-      Comment.updateOne(
-        { _id: commentId },
-        { $push: { likes: likerEmail } }
-      ).then(response => {
-        res.send(response);
-      });
-    }
+    const action = commentLikes.includes(likerEmail)
+      ? { $pull: { likes: likerEmail } }
+      : { $push: { likes: likerEmail } };
+    Comment.updateOne({ _id: commentId }, action).then(response => {
+      res.send(response);
+    });
   }
 };
 

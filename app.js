@@ -1,18 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var methodOverride = require('method-override');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const methodOverride = require('method-override');
 
-var homeRouter = require('./routes/home');
-var postsRouter = require('./routes/posts');
-var sessionsRouter = require('./routes/sessions');
-var usersRouter = require('./routes/users');
+const homeRouter = require('./routes/home');
+const postsRouter = require('./routes/posts');
+const sessionsRouter = require('./routes/sessions');
+const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 });
 
 // middleware function to check for logged-in users
-var sessionChecker = (req, res, next) => {
+const sessionChecker = (req, res, next) => {
   if (
     req.session === undefined ||
     req.session.user === undefined ||
