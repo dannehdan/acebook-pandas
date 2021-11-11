@@ -3,7 +3,7 @@
 <main class='posts'>
     {{#each posts}}
 
-    <div class='card mx-auto post-div' id="post-{{this._id}}">
+    <div class='post card mx-auto post-div' id="post-{{this._id}}">
         <div class='card-body'>
             <div class='d-flex'>
                 <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
@@ -18,7 +18,7 @@
         </div>
 
         {{#if this.imageLink}}
-        <div class='card-img-bottom'>
+        <div class='post-img-card card-img-bottom'>
             <img src={{this.imageLink}} class='post-img' alt='post image' />
         </div>
         {{/if}}
@@ -48,7 +48,7 @@
                 <input type='hidden' name='postId' value='{{this._id}}' style='display: none; margin:0px; padding:0px' />
                 <div class='row'>
                     <div class='d-flex col-md-8 justify-content-start'>
-                        <input class='comment-text' name='message' type='text' placeholder='Enter a comment' />
+                        <input class='comment-text' id="comment-text-for-{{this._id}}" name='message' type='text' placeholder='Enter a comment' />
                     </div>
                     <div class='d-flex col-md-4 justify-content-end'>
                         {{!-- <button class="comment-button" onclick="addComment('{{this._id}}')"> --}}

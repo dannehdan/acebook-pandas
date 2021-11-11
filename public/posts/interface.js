@@ -136,23 +136,6 @@ var addComment = id => {
 };
 
 // eslint-disable-next-line no-unused-vars
-var toggleCommenting = id => {
-  const showButton = document.getElementById(
-    `comment-toggle-text-${id}`
-  ).innerText;
-
-  if (showButton === 'Add comment') {
-    document.getElementById(`comment-box-${id}`).style.display = 'block';
-    document.getElementById(`comment-toggle-text-${id}`).innerText =
-      'Hide comment';
-  } else {
-    document.getElementById(`comment-box-${id}`).style.display = 'none';
-    document.getElementById(`comment-toggle-text-${id}`).innerText =
-      'Add comment';
-  }
-};
-
-// eslint-disable-next-line no-unused-vars
 var showMoreComments = id => {
   document
     .getElementById(`comments-for-${id}`)
@@ -182,5 +165,22 @@ var showMoreComments = id => {
       .forEach(comment => (comment.style.display = 'block'));
     document.getElementById(`show-more-comments-for-${id}`).innerText =
       'Show less comments';
+  }
+};
+
+// eslint-disable-next-line no-unused-vars
+var toggleCommenting = id => {
+  const showButton = document.getElementById(
+    `comment-toggle-text-${id}`
+  ).innerText;
+
+  if (showButton === 'Add comment') {
+    document.getElementById(`comment-box-${id}`).style.display = 'block';
+    document.getElementById(`comment-toggle-text-${id}`).innerText =
+      'Hide comment';
+  } else {
+    document.getElementById(`comment-box-${id}`).style.display = 'none';
+    document.getElementById(`comment-toggle-text-${id}`).innerText =
+      'Add comment';
   }
 };
