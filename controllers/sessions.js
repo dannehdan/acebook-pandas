@@ -1,20 +1,24 @@
-var User = require('../models/user');
-var bcrypt = require('bcrypt');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
-var SessionsController = {
+const SessionsController = {
   New: function (req, res) {
     if (req.session.user) {
+      req.session.message = {
+        type: 'warning',
+        intro: `You are already logged in as ${req.session.user.name}!`,
+        message: 'To switch user, please, log out first.'
+      };
       res.redirect('/posts');
-      //to-do add amber alert flash message
     } else {
       res.render('sessions/new', { title: 'Log In' });
     }
   },
 
   Create: function (req, res) {
-    console.log('trying to log in');
-    var email = req.body.email;
-    var password = req.body.password;
+    // trying to log in
+    const email = req.body.email;
+    const password = req.body.password;
 
     User.findOne({ email: email }).then(async user => {
       if (!user) {
@@ -25,6 +29,7 @@ var SessionsController = {
         };
         return res.redirect('/sessions/new');
       }
+
       try {
         if (await bcrypt.compare(password, user.password)) {
           req.session.user = user;
@@ -50,11 +55,8 @@ var SessionsController = {
 
   Destroy: function (req, res) {
     if (req.session.user && req.cookies.user_sid) {
-      console.log('session exists, ' + req.session.user._id);
       res.clearCookie('user_sid');
-    } else {
-      console.log("it doesn't exist");
-    }
+    } 
     res.redirect('/');
   }
 };
