@@ -208,9 +208,9 @@ var PostsController = {
       });
   },
 
-  New: function (req, res) {
-    res.render('posts/new', { title: 'New Post' });
-  },
+  // New: function (req, res) {
+  //   res.render('posts/new', { title: 'New Post' });
+  // },
 
   Create: function (req, res) {
     // console.log(req);
