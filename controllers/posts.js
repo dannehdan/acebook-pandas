@@ -97,6 +97,7 @@ var PostsController = {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
 
+
             post.comments = post.comments.sort((a, b) => {
               return new Date(b.createdAt) - new Date(a.createdAt);
             });
@@ -122,6 +123,7 @@ var PostsController = {
             post.needsCommentExpander = post.comments.length > 2;
 
             post.likes = post.likes === undefined ? [] : post.likes;
+
             return {
               ...post,
               posterName: post.posterName[0]
@@ -131,12 +133,14 @@ var PostsController = {
               postLiked: post.likes.includes(req.session.user.email)
             };
           });
+
           const resParams = { posts: formattedPosts, title: 'Posts' };
           if (scrollTo) {
             resParams.scrollToComment = scrollTo;
           }
 
           res.render('posts/index', resParams);
+
         }
       });
   },

@@ -16,16 +16,10 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "ecmaVersion": 2018
   },
   "plugins": ["cypress", "jest", "node"],
   "rules": {
-    "node/no-unsupported-features/es-syntax": [
-      "error",
-      { "ignores": ["modules"] }
-    ],
-    "node/no-unpublished-import": "off",
     "node/no-unpublished-require": "off"
   }
 }
