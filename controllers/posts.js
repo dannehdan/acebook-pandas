@@ -209,7 +209,9 @@ var PostsController = {
   },
 
   // New: function (req, res) {
-  //   res.render('posts/new', { title: 'New Post' });
+  //   const resParams = { title: 'New Post', user: req.session.user };
+
+  //   res.render('posts/new', resParams);
   // },
 
   Create: function (req, res) {

@@ -7,7 +7,8 @@ var SessionsController = {
       res.redirect('/posts');
       //to-do add amber alert flash message
     } else {
-      res.render('sessions/new', { title: 'Log In' });
+      const resParams = { title: 'Log In' };
+      res.render('sessions/new', resParams);
     }
   },
 

@@ -41,7 +41,18 @@ var UsersController = {
 
   ViewMe: (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
-      res.render('users/user', { user: foundUser['email'] });
+      if (err || !foundUser) {
+        req.session.message = {
+          type: 'danger',
+          intro: 'User not found!',
+          message: 'This user may no longer exist'
+        };
+
+        res.redirect('/posts');
+      } else {
+        const resParams = { title: foundUser.name, user: foundUser };
+        res.render('users/user', resParams);
+      }
     });
   }
 };
