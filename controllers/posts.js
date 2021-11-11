@@ -2,6 +2,7 @@ var Post = require('../models/post');
 var Comment = require('../models/comment');
 const User = require('../models/user');
 
+require('dotenv').config();
 var timeDifference = require('../js_helpers');
 
 const { Storage } = require('@google-cloud/storage');
