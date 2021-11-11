@@ -64,6 +64,7 @@ Cypress.Commands.add('deleteUser', function (email) {
 
 Cypress.Commands.add('logOutUser', function () {
   cy.visit('/');
+  cy.get('#profileDropdown').click();
   cy.get('#logout-button').click();
 });
 
