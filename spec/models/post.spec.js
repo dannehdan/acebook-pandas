@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 require('../mongodb_helper');
-var Post = require('../../models/post');
+const Post = require('../../models/post');
 
 describe('Post model', function () {
   beforeEach(function (done) {
@@ -11,7 +11,7 @@ describe('Post model', function () {
   });
 
   it('has a message', function () {
-    var post = new Post({ message: 'some message' });
+    const post = new Post({ message: 'some message' });
     expect(post.message).toEqual('some message');
   });
 
@@ -24,7 +24,7 @@ describe('Post model', function () {
   });
 
   it('can save a post', function (done) {
-    var post = new Post({ message: 'some message' });
+    const post = new Post({ message: 'some message' });
 
     post.save(function (err) {
       expect(err).toBeNull();
