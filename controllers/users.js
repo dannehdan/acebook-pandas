@@ -40,8 +40,8 @@ var UsersController = {
   },
 
   ViewMe: (req, res) => {
-    User.findById(req.params.id, (err, foundUser) => {
-      if (err || !foundUser) {
+    User.findById(req.params.id || 'Anonymous', (err, foundUser) => {
+      if (err) {
         req.session.message = {
           type: 'danger',
           intro: 'User not found!',
