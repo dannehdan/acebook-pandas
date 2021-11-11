@@ -34,6 +34,9 @@ var addLike = id => {
     document
       .getElementById('like-' + id)
       .querySelector('.like-number').innerText = Number(count) + 1;
+    document
+      .getElementById('post-' + id)
+      .querySelector('.like-button').style.backgroundColor = 'rgb(0,183,255)';
   } else {
     //remove like from DB
     document
@@ -45,6 +48,9 @@ var addLike = id => {
     document
       .getElementById('like-' + id)
       .querySelector('.like-number').innerText = Number(count) - 1;
+    document
+      .getElementById('post-' + id)
+      .querySelector('.like-button').style.backgroundColor = 'rgb(242,242,242)';
   }
 };
 
@@ -84,6 +90,9 @@ var handleCommentLike = id => {
     document
       .getElementById('comment-' + id)
       .querySelector('.like-number').innerText = Number(count) + 1;
+    document
+      .getElementById('comment-' + id)
+      .querySelector('.like-button').style.backgroundColor = 'rgb(0,183,255)';
   } else {
     //remove like from DB
     document
@@ -95,6 +104,9 @@ var handleCommentLike = id => {
     document
       .getElementById('comment-' + id)
       .querySelector('.like-number').innerText = Number(count) - 1;
+    document
+      .getElementById('comment-' + id)
+      .querySelector('.like-button').style.backgroundColor = 'rgb(242,242,242)';
   }
 };
 
