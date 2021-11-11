@@ -108,6 +108,12 @@ input[type='submit'] {
   text-align: center;
 }
 
+.profile-dropdown {
+  border: none;
+  background-color: rgb(128, 200, 238);
+  text-align: center;
+}
+
 /* ============================ */
 
 /* =========== HOME =========== */
@@ -207,6 +213,14 @@ a {
   margin-top: 20px;
 }
 
+.nav-profile-photo {
+  width: 30px;
+  height: 30px;
+  border: solid;
+  border-color: royalblue;
+  border-width: 2px;
+  border-radius: 50%;
+}
 /* ============================ */
 
 /* =========== POST =========== */
@@ -229,16 +243,6 @@ a {
 .post-profile-photo {
   width: 40px;
   height: 40px;
-  margin-right: 10px;
-  border: solid;
-  border-color: royalblue;
-  border-width: 2px;
-  border-radius: 50%;
-}
-
-.nav-profile-photo {
-  width: 30px;
-  height: 30px;
   margin-right: 10px;
   border: solid;
   border-color: royalblue;
@@ -367,7 +371,7 @@ input[type='submit']:not(.navbar input[type='submit']) {
   color: black;
   box-shadow: 0 5px 30px 0 rgba(95, 186, 233, 0.3);
   border-radius: 5px 5px 5px 5px;
-  padding: 30px;
+  padding: 20px 30px;
 }
 
 .new-post input[type='text'] {
@@ -396,22 +400,32 @@ input[type='submit']:not(.navbar input[type='submit']) {
   margin-bottom: 15px;
 }
 
-.like-button[value='Like'] {
-  background-color: rgb(242, 242, 242);
-}
-
 .like-button[value='Liked'] {
   background-color: #00b7ff;
 }
 
-.profile-dropdown {
-  /* background-color: #56baed;
-    background-color: #00b7ff; */
-  background-color: #00b7ff;
-  /* background-color: rgb(128, 200, 238); */
-  text-align: center;
-}
-
 body {
   overflow-x: hidden;
+}
+
+.like-button,
+.comment-button,
+.comment-toggle-button {
+  display: block;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  box-shadow: 0 5px 5px 0 rgba(95, 186, 233, 0.4);
+  border-radius: 5px 5px 5px 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.comment-text {
+  font-size: 12px;
+  padding: 10px;
 }
