@@ -13,7 +13,6 @@ describe('Creating posts', function () {
     cy.signUpNewUser('Hermione Granger', 'hermione');
 
     cy.visit('/posts');
-    cy.contains('New post').click();
 
     cy.get('#new-post-form').find('[type="text"]').type('Hello, world!');
     cy.get('#new-post-form').submit();
@@ -25,7 +24,6 @@ describe('Creating posts', function () {
     cy.visitSignUpPage();
     cy.signUpNewUser('Hermione Granger', 'hermione');
 
-    cy.visit('/posts/new');
     cy.get('#new-post-form').find('[type="text"]').type('Panda');
     cy.get('#new-post-form').find('[type="file"]').attachFile('../panda.jpg');
     cy.get('#new-post-form').submit();
@@ -41,12 +39,10 @@ describe('Creating posts', function () {
     cy.visitSignUpPage();
     cy.signUpNewUser('Hermione Granger', 'hermione');
 
-    cy.visit('/posts/new');
     cy.get('#new-post-form').find('[type="text"]').type('Panda');
     cy.get('#new-post-form').find('[type="file"]').attachFile('../panda.jpg');
     cy.get('#new-post-form').submit();
 
-    cy.visit('/posts/new');
     cy.get('#new-post-form').find('[type="text"]').type('Another panda');
     cy.get('#new-post-form').find('[type="file"]').attachFile('../panda.jpg');
     cy.get('#new-post-form').submit();
@@ -62,7 +58,6 @@ describe('Creating posts', function () {
     cy.visitSignUpPage();
     cy.signUpNewUser('Hermione Granger', 'hermione');
 
-    cy.visit('/posts/new');
     cy.get('#new-post-form').find('[type="text"]').type('Panda');
     cy.get('#new-post-form').find('[type="file"]').attachFile('../panda.jpg');
     cy.get('#new-post-form').submit();
