@@ -3,6 +3,7 @@
 This is a Node.js Acebook engineering project by pandas team.
 
 It uses:
+
 - [Express](https://expressjs.com/) web framework for Node.js.
 - [Nodemon](https://nodemon.io/) to reload the server automatically.
 - [Handlebars](https://handlebarsjs.com/) to render view templates.
@@ -89,6 +90,7 @@ It uses:
   npm test
   ```
 - Run a check
+
   ```bash
   npm run lint              # linter only
   npm run test:unit         # unit tests only

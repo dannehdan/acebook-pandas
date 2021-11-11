@@ -50,7 +50,7 @@ var SessionsController = {
 
   Destroy: function (req, res) {
     if (req.session.user && req.cookies.user_sid) {
-      console.log("session exists, " + req.session.user._id);
+      console.log('session exists, ' + req.session.user._id);
       res.clearCookie('user_sid');
     } else {
       console.log("it doesn't exist");

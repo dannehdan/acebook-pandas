@@ -120,6 +120,7 @@
             class="btn-close"
             data-dismiss="alert"
             style="float:right;"
+            id="alert-btn"
             onclick="document.getElementById('after-login-alert').style.display = 'none'"
           ></button>
           <p id="alert-message">
@@ -131,4 +132,9 @@
     {{/if}}
     {{{body}}}
   </body>
+  <script>
+    $(document).ready(function(){
+      setTimeout(() => {$(".alert").fadeOut(1500);}, 3000);
+    });
+  </script>
 </html>

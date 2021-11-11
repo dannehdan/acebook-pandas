@@ -1,4 +1,5 @@
 var Post = require('../models/post');
+var Comment = require('../models/comment');
 const User = require('../models/user');
 
 var timeDifference = require('../js_helpers');
@@ -69,13 +70,76 @@ async function uploadImage(image) {
 
 var PostsController = {
   Index: function (req, res) {
+    var scrollTo = req.query.scroll_to;
+    // console.log("Scroll:", scrollTo);
+
     Post.aggregate([
       {
+        // Get poster for their name
         $lookup: {
           from: User.collection.name,
           localField: 'poster',
           foreignField: 'email',
           as: 'posterName'
+        }
+      },
+      {
+        // Get comments linked to post
+        $lookup: {
+          from: Comment.collection.name,
+          localField: '_id',
+          foreignField: 'postId',
+          as: 'comments'
+        }
+      },
+      {
+        $unwind: {
+          path: '$comments',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: User.collection.name,
+          localField: 'comments.poster',
+          foreignField: 'email',
+          as: 'comments.commenterInfo'
+        }
+      },
+      {
+        $sort: { 'comments.createdAt': -1 }
+      },
+      {
+        $group: {
+          _id: '$_id',
+          message: { $first: '$message' },
+          poster: { $first: '$poster' },
+          posterName: { $first: '$posterName' },
+          updatedAt: { $first: '$updatedAt' },
+          createdAt: { $first: '$createdAt' },
+          likes: { $first: '$likes' },
+          comments: { $push: '$comments' },
+          imageLink: { $first: '$imageLink' }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          message: 1,
+          poster: 1,
+          posterName: 1,
+          updatedAt: 1,
+          createdAt: 1,
+          likes: 1,
+          imageLink: 1,
+          // comments: 1
+          comments: {
+            $filter: {
+              input: '$comments',
+              as: 'c',
+              cond: { $ifNull: ['$$c._id', false] }
+            }
+          }
         }
       }
     ])
@@ -84,36 +148,64 @@ var PostsController = {
         if (err) {
           throw err;
         } else {
+          // console.log(aggregateRes.map(post => {
+          // let comments = post.comments;
+          // let commenters = [];
+          // comments.forEach(function(comment) {
+          //     commenters.push(JSON.stringify(comment.commenterInfo));
+          // });
+          // return commenters;
+          // }));
           let formattedPosts = aggregateRes.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
-            if (post.likes == undefined) {
-              post.likes = [];
-            }
+
+            post.comments = post.comments.sort((a, b) => {
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+            post.comments.forEach(comment => {
+              let date = new Date(comment.createdAt);
+              comment.dateString = timeDifference(date);
+              comment.toCollapse = post.comments.indexOf(comment) > 1;
+              comment.commentLiked = comment.likes.includes(
+                req.session.user.email
+              );
+              comment.commentLikes = comment.likes.length;
+              // comment.posterInfo = await User.findOne({
+              //     email: comment.poster
+              // }).exec();
+              // console.log(comment.commenterInfo);
+
+              if (comment.commenterInfo.length < 1) {
+                comment.commenterName = 'Anonymous';
+              } else {
+                comment.commenterName = comment.commenterInfo[0].name;
+              }
+            });
+            post.needsCommentExpander = post.comments.length > 2;
+
+            post.likes = post.likes === undefined ? [] : post.likes;
             return {
               ...post,
               posterName: post.posterName[0]
                 ? post.posterName[0].name
-                : 'Unknown User',
+                : 'Anonymous',
               postLikes: post.likes.length,
               postLiked: post.likes.includes(req.session.user.email)
             };
           });
-          res.render('posts/index', {
+          const resParams = {
             posts: formattedPosts,
             title: 'Posts',
             user: req.session.user
-          });
+          };
+          if (scrollTo) {
+            resParams.scrollToComment = scrollTo;
+          }
+
+          res.render('posts/index', resParams);
         }
       });
-
-    // Post.find(function(err, posts) {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     console.log(posts);
-    //     res.render('posts/index', { posts: posts, title: "Posts" });
-    // }).sort({ createdAt: 'desc' });
   },
 
   New: function (req, res) {
@@ -121,6 +213,7 @@ var PostsController = {
   },
 
   Create: function (req, res) {
+    // console.log(req);
     req.body.poster = req.session.user.email;
 
     if (req.files && req.files.image && req.files.image.size) {
@@ -161,7 +254,7 @@ var PostsController = {
       });
     }
   },
-  Like: async function (req) {
+  Like: async function (req, res) {
     const likerEmail = req.session.user.email;
     const postId = req.body.postId;
     const postLikes = await Post.findOne({ _id: postId }).then(post => {
@@ -170,13 +263,13 @@ var PostsController = {
     if (postLikes.includes(likerEmail)) {
       Post.updateOne({ _id: postId }, { $pull: { likes: likerEmail } }).then(
         response => {
-          return response;
+          res.send(response);
         }
       );
     } else {
       Post.updateOne({ _id: postId }, { $push: { likes: likerEmail } }).then(
         response => {
-          return response;
+          res.send(response);
         }
       );
     }
