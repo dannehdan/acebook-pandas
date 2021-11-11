@@ -1,6 +1,31 @@
-<a class='new-post-link' href='/posts/new'>New post</a>
-<h1>Timeline</h1>
+{{!-- <a class='new-post-link' href='/posts/new'>New post</a> --}}
+<div class='new-post-container mx-auto'>
+  <div class='new-post'>
+    <form
+      id='new-post-form'
+      action='/posts'
+      method='post'
+      enctype='multipart/form-data'
+    >
+      <div class='row'>
+        <div class="col">
+            <input id='message' type='text' name='message' value='' placeholder='What&#39s on your mind, {{user.name}}?' />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <input id='post-img' type='file' name='image' accept='.png, .jpg, .jpeg' />
+        </div>
+        <div class="col-md-4">
+          <input type='submit' value='Submit' />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<hr class="solid">
 <main class='posts'>
+  <h3 class='mx-auto'>Timeline</h3>
     {{#each posts}}
 
     <div class='post card mx-auto post-div' id="post-{{this._id}}">
