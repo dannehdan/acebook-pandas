@@ -80,7 +80,7 @@ var PostsController = {
           from: User.collection.name,
           localField: 'poster',
           foreignField: 'email',
-          as: 'posterName'
+          as: 'posterInfo'
         }
       },
       {
@@ -114,7 +114,7 @@ var PostsController = {
           _id: '$_id',
           message: { $first: '$message' },
           poster: { $first: '$poster' },
-          posterName: { $first: '$posterName' },
+          posterInfo: { $first: '$posterInfo' },
           updatedAt: { $first: '$updatedAt' },
           createdAt: { $first: '$createdAt' },
           likes: { $first: '$likes' },
@@ -127,12 +127,11 @@ var PostsController = {
           _id: 1,
           message: 1,
           poster: 1,
-          posterName: 1,
+          posterInfo: 1,
           updatedAt: 1,
           createdAt: 1,
           likes: 1,
           imageLink: 1,
-          // comments: 1
           comments: {
             $filter: {
               input: '$comments',
@@ -148,14 +147,6 @@ var PostsController = {
         if (err) {
           throw err;
         } else {
-          // console.log(aggregateRes.map(post => {
-          // let comments = post.comments;
-          // let commenters = [];
-          // comments.forEach(function(comment) {
-          //     commenters.push(JSON.stringify(comment.commenterInfo));
-          // });
-          // return commenters;
-          // }));
           let formattedPosts = aggregateRes.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
@@ -171,10 +162,6 @@ var PostsController = {
                 req.session.user.email
               );
               comment.commentLikes = comment.likes.length;
-              // comment.posterInfo = await User.findOne({
-              //     email: comment.poster
-              // }).exec();
-              // console.log(comment.commenterInfo);
 
               if (comment.commenterInfo.length < 1) {
                 comment.commenterName = 'Anonymous';
@@ -187,8 +174,8 @@ var PostsController = {
             post.likes = post.likes === undefined ? [] : post.likes;
             return {
               ...post,
-              posterName: post.posterName[0]
-                ? post.posterName[0].name
+              posterName: post.posterInfo[0]
+                ? post.posterInfo[0].name
                 : 'Anonymous',
               postLikes: post.likes.length,
               postLiked: post.likes.includes(req.session.user.email)
@@ -209,7 +196,8 @@ var PostsController = {
   },
 
   Search: function (req, res) {
-    const search = req.query.search;
+    const searchValue = req.query.search_value;
+    const searchType = req.query.search_type;
 
     Post.aggregate([
       {
@@ -218,7 +206,7 @@ var PostsController = {
           from: User.collection.name,
           localField: 'poster',
           foreignField: 'email',
-          as: 'posterName'
+          as: 'posterInfo'
         }
       },
       {
@@ -252,7 +240,7 @@ var PostsController = {
           _id: '$_id',
           message: { $first: '$message' },
           poster: { $first: '$poster' },
-          posterName: { $first: '$posterName' },
+          posterInfo: { $first: '$posterInfo' },
           updatedAt: { $first: '$updatedAt' },
           createdAt: { $first: '$createdAt' },
           likes: { $first: '$likes' },
@@ -265,7 +253,7 @@ var PostsController = {
           _id: 1,
           message: 1,
           poster: 1,
-          posterName: 1,
+          posterInfo: 1,
           updatedAt: 1,
           createdAt: 1,
           likes: 1,
@@ -285,9 +273,20 @@ var PostsController = {
         if (err) {
           throw err;
         } else {
-          let filteredPosts = aggregateRes.filter(post =>
-            post.message.includes(search)
-          );
+          let filteredPosts = aggregateRes.filter(post => {
+            switch (searchType) {
+              case 'content':
+                return post.message && post.message.includes(searchValue);
+              case 'author':
+                return (
+                  post.posterInfo[0] &&
+                  post.posterInfo[0].name.includes(searchValue)
+                );
+              // return post.posterInfo[0] && post.posterInfo[0].name && post.posterInfo[0].name.includes(searchValue);
+              default:
+                return false;
+            }
+          });
           let formattedPosts = filteredPosts.map(post => {
             let date = new Date(post.createdAt);
             post.dateString = timeDifference(date);
@@ -314,8 +313,8 @@ var PostsController = {
             post.likes = post.likes === undefined ? [] : post.likes;
             return {
               ...post,
-              posterName: post.posterName[0]
-                ? post.posterName[0].name
+              posterName: post.posterInfo[0]
+                ? post.posterInfo[0].name
                 : 'Anonymous',
               postLikes: post.likes.length,
               postLiked: post.likes.includes(req.session.user.email)
