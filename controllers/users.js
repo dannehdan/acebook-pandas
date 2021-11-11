@@ -1,18 +1,17 @@
-var User = require('../models/user');
-var bcrypt = require('bcrypt');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
-var UsersController = {
+const UsersController = {
   New: function (req, res) {
     res.render('users/new', { title: 'Sign Up' });
   },
 
   Create: async function (req, res) {
-    var userInfo = { ...req.body };
-    var hashedPassword = await bcrypt.hash(userInfo.password, 10);
+    const userInfo = { ...req.body };
+    const hashedPassword = await bcrypt.hash(userInfo.password, 10);
     userInfo.password = hashedPassword;
-    // console.log(hashedPassword);
 
-    var user = new User(userInfo);
+    const user = new User(userInfo);
 
     User.findOne({ email: user.email }).then(userReturned => {
       if (userReturned) {
@@ -25,6 +24,7 @@ var UsersController = {
       } else {
         user.save(function (err) {
           if (err) {
+            console.error('Saving new user error:\n', err);
             throw err;
           }
           req.session.message = {

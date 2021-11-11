@@ -1,9 +1,4 @@
 describe('Sign up', function () {
-  // before(async(done) => {
-  //     await cy.task("db:drop:all");
-  //     done();
-  // })
-
   it('can make a new account', function () {
     cy.deleteUser('hermione');
     cy.visitSignUpPage();
