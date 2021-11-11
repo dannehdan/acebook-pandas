@@ -234,6 +234,12 @@ a {
   color: black;
   box-shadow: 0 5px 30px 0 rgba(95, 186, 233, 0.3);
   border-radius: 5px 5px 5px 5px;
+  padding: 0px 5px;
+}
+
+.search-bar {
+  width: 60%;
+  font-size: 12px;
 }
 
 .date-posted {
@@ -359,10 +365,9 @@ input[type='submit']:not(.navbar input[type='submit']) {
 
 .new-post-container {
   margin-top: 20px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  width: 60%;
   font-size: 12px;
 }
 
@@ -374,12 +379,14 @@ input[type='submit']:not(.navbar input[type='submit']) {
   padding: 20px 30px;
 }
 
-.new-post input[type='text'] {
+.new-post input[type='text'],
+.search-bar input[type='text'] {
   font-size: 13px;
   font-style: italic;
 }
 
-.new-post input[type='submit'] {
+.new-post input[type='submit'],
+.search-bar input[type='submit'] {
   width: 20%;
 }
 

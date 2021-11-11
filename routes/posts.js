@@ -9,7 +9,7 @@ const CommentsController = require('../controllers/comments');
 
 router.get('/', PostsController.Index);
 router.post('/', multipartyMiddleware, PostsController.Create);
-// router.get('/new', PostsController.New);
+router.get('/search', PostsController.Search);
 
 // TODO: CRUD the link - PATCH /:post_id/like
 router.patch('/testLikes', PostsController.Like);
