@@ -18,6 +18,7 @@ h1 {
 
 h4 {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 a {
@@ -61,8 +62,6 @@ input[type='submit'] {
   font-size: 13px;
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   border-radius: 5px 5px 5px 5px;
-  margin-left: 25%;
-  margin-right: 25%;
   margin-top: 20px;
 }
 
@@ -142,6 +141,53 @@ input[type='submit'] {
 }
 
 .hero-text h1 {
+  text-shadow: -0.5px 0 rgba(0, 0, 0, 0.459), 0 0.5px rgba(0, 0, 0, 0.459),
+    0.5px 0 rgba(0, 0, 0, 0.459), 0 -0.5px rgba(0, 0, 0, 0.459);
+  font-family: 'Courier New', serif;
+  color: rgba(0, 0, 0, 0.459);
+}
+
+body {
+  margin: auto;
+  padding: 0;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+  margin: 20px;
+}
+
+h3 {
+  max-width: 60%;
+  margin-bottom: 15px;
+}
+
+h4 {
+  text-align: center;
+}
+
+hr.solid {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  color: gray;
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+.brand-name {
+  margin: 0px;
+  font-family: 'Courier New', serif;
+  font-size: 2rem;
+}
+
+a {
   color: rgb(0, 0, 0);
   font-family: 'Courier New', monospace;
 }
@@ -184,6 +230,20 @@ input[type='submit'] {
   width: 40px;
   height: 40px;
   margin-right: 10px;
+  border: solid;
+  border-color: royalblue;
+  border-width: 2px;
+  border-radius: 50%;
+}
+
+.nav-profile-photo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border: solid;
+  border-color: royalblue;
+  border-width: 2px;
+  border-radius: 50%;
 }
 
 .post-img-card {
@@ -232,7 +292,8 @@ input[type='submit'] {
 
 input[type='email'],
 [type='password'],
-[type='text'] {
+[type='text'],
+[type='file'] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -240,7 +301,6 @@ input[type='email'],
   text-align: left;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
   margin: 5px;
   width: 100%;
   border: 2px solid #f6f6f6;
@@ -257,17 +317,15 @@ input[type='submit']:not(.navbar input[type='submit']) {
   background-color: #56baed;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 15px 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  width: 50%;
+  width: 100%;
   font-size: 13px;
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   border-radius: 5px 5px 5px 5px;
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .post-img {
@@ -295,11 +353,47 @@ input[type='submit']:not(.navbar input[type='submit']) {
   transform: translate(0%, 50%);
 }
 
+.new-post-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  font-size: 12px;
+}
+
+.new-post {
+  border: none;
+  color: black;
+  box-shadow: 0 5px 30px 0 rgba(95, 186, 233, 0.3);
+  border-radius: 5px 5px 5px 5px;
+  padding: 30px;
+}
+
+.new-post input[type='text'] {
+  font-size: 13px;
+  font-style: italic;
+}
+
+.new-post input[type='submit'] {
+  width: 20%;
+}
+
+.comments-div {
+  font-size: 12px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
 .comment-div {
-  margin: 30px 0px 10px 0px;
   padding: 5px;
-  border: solid;
-  border-radius: 5px;
+}
+
+.comment-divide {
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .like-button[value='Like'] {
@@ -308,4 +402,16 @@ input[type='submit']:not(.navbar input[type='submit']) {
 
 .like-button[value='Liked'] {
   background-color: #00b7ff;
+}
+
+.profile-dropdown {
+  /* background-color: #56baed;
+    background-color: #00b7ff; */
+  background-color: #00b7ff;
+  /* background-color: rgb(128, 200, 238); */
+  text-align: center;
+}
+
+body {
+  overflow-x: hidden;
 }

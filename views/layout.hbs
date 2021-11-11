@@ -1,140 +1,100 @@
 <html>
-  <head>
+
+<head>
     <title>{{title}}</title>
     <meta charset='utf-8' />
-    <meta
-      name='viewport'
-      content='width=device-width, initial-scale=1, shrink-to-fit=no'
-    />
-    <link
-      href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
-      rel='stylesheet'
-      integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3'
-      crossorigin='anonymous'
-    />
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script
-      src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
-      integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
-      crossorigin='anonymous'
-    ></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js' integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM' crossorigin='anonymous'></script>
     <script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
-    <link
-      type='image/x-icon'
-      rel='icon'
-      href='https://2vvkl84czfcv3uc0ukz7sgl1-wpengine.netdna-ssl.com/wp-content/uploads/2021/04/favicon-1.png'
-    />
-  </head>
-  <body>
+    <link type='image/x-icon' rel='icon' href='https://2vvkl84czfcv3uc0ukz7sgl1-wpengine.netdna-ssl.com/wp-content/uploads/2021/04/favicon-1.png' />
+</head>
+
+<body>
 
     <nav class='navbar navbar-expand-lg'>
-      <div class='container-fluid'>
-        <a class='navbar-brand mt-lg-0 brand-name' href='/'>
-          <img
-            src='https://2vvkl84czfcv3uc0ukz7sgl1-wpengine.netdna-ssl.com/wp-content/uploads/2021/04/favicon-1.png'
-            height='30'
-            alt=''
-            loading='lazy'
-            style='margin-left: 12px;'
-          />
-        </a>
-        <a
-          class='navbar-brand mt-lg-0 brand-name'
-          href='/'
-          style='margin-left: 8px; margin-right: 8px;'
-        >
+        <div class='container-fluid'>
+            <a class='navbar-brand mt-lg-0 brand-name' href='/'>
+                <img src='https://2vvkl84czfcv3uc0ukz7sgl1-wpengine.netdna-ssl.com/wp-content/uploads/2021/04/favicon-1.png' height='30' alt='' loading='lazy' style='margin-left: 12px;' />
+            </a>
+            <a class='navbar-brand mt-lg-0 brand-name' href='/' style='margin-left: 8px; margin-right: 8px;'>
         Acebook
         </a>
-        <button
-          class='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navbarSupportedContent'
-          aria-controls='navbarSupportedContent'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-        >
+            <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
           <span class='navbar-toggler-icon'></span>
         </button>
 
-        <!-- navbar left items -->
-        <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-          <ul class='navbar-nav me-auto mb-lg-0'>
-            <li class='nav-item'>
-              <a class='nav-link' href='/posts'>Posts</a>
-            </li>
-            <li class='nav-item'>
-              <a class='nav-link' href='/posts/new'>New Posts</a>
-            </li>
-          </ul>
+            <!-- navbar left items -->
+            <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+                <ul class='navbar-nav me-auto mb-lg-0'>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/posts'>Posts</a>
+                    </li>
+                    {{!-- <li class='nav-item'>
+                        <a class='nav-link' href='/posts/new'>New Posts</a>
+                    </li> --}}
+                </ul>
 
-          <!-- navbar right items -->
-          {{#if userExists}}
-            <ul class='nav navbar-nav navbar-right mb-lg-0'>
-              <li class='nav-item'>
-                <form
-                  id='logout-form'
-                  action='/sessions?_method=DELETE'
-                  method='POST'
-                  style='margin:0px; padding:0px'
-                >
-                  <a
-                    class='nav-link'
-                    id='logout-button'
-                    href='#'
-                    onclick="document.getElementById('logout-form').submit(); return false;"
-                  >
+                <!-- navbar right items -->
+                {{#if userExists}}
+                <ul class='nav navbar-nav navbar-right mb-lg-0'>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class='nav-profile-photo' height="30" src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' /> {{user.name}}</a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark profile-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/users/{{user._id}}">My Profile</a>
+                            {{!-- <a class="dropdown-item" href="#">Another action</a> --}}
+                            <div class="dropdown-divider"></div>
+                            <form id='logout-form' action='/sessions?_method=DELETE' method='POST' style='margin:0px; padding:0px'>
+                            <a class='dropdown-item' id='logout-button' href='#' onclick="document.getElementById('logout-form').submit(); return false;">
                     Log Out
                   </a>
-                </form>
-              </li>
-              <li class='nav-item'>
-                <a class='nav-link' href='/users/{{user._id}}'>Profile</a>
-              </li>
-            </ul>
-          {{else}}
-            <ul
-              id='no-session-state'
-              class='nav navbar-nav navbar-right mb-2 mb-lg-0'
-            >
-              <li class='nav-item'>
-                <a class='nav-link' href='/users/new'>Sign Up</a>
-              </li>
-              <li class='nav-item'>
-                <a class='nav-link' href='/sessions/new'>Log in</a>
-              </li>
-            </ul>
-          {{/if}}
+                        </form>
+                            {{!-- <a class="dropdown-item" href="">Log Out</a> --}}
+                        </div>
+                    </li>
+
+                    {{!-- <li class='nav-item'>
+                        <form id='logout-form' action='/sessions?_method=DELETE' method='POST' style='margin:0px; padding:0px'>
+                            <a class='nav-link' id='logout-button' href='#' onclick="document.getElementById('logout-form').submit(); return false;">
+                    Log Out
+                  </a>
+                        </form>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/users/{{user._id}}'>Profile</a>
+                    </li> --}}
+                </ul>
+                {{else}}
+                <ul id='no-session-state' class='nav navbar-nav navbar-right mb-2 mb-lg-0'>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/users/new'>Sign Up</a>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/sessions/new'>Log in</a>
+                    </li>
+                </ul>
+                {{/if}}
+            </div>
         </div>
-      </div>
     </nav>
     {{#if message}}
-      <div class='container'>
-        <div
-          class="alert alert-{{message.type}}"
-          id="after-login-alert"
-          style="text-align: center;margin-top:10px"
-        >
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="alert"
-            style="float:right;"
-            id="alert-btn"
-            onclick="document.getElementById('after-login-alert').style.display = 'none'"
-          ></button>
-          <p id="alert-message">
-            <strong>{{message.intro}}</strong>
-            {{message.message}}
-          </p>
+    <div class='container'>
+        <div class="alert alert-{{message.type}}" id="after-login-alert" style="text-align: center;margin-top:10px">
+            <button type="button" class="btn-close" data-dismiss="alert" style="float:right;" id="alert-btn" onclick="document.getElementById('after-login-alert').style.display = 'none'"></button>
+            <p id="alert-message">
+                <strong>{{message.intro}}</strong> {{message.message}}
+            </p>
         </div>
-      </div>
-    {{/if}}
-    {{{body}}}
-  </body>
-  <script>
-    $(document).ready(function(){
-      setTimeout(() => {$(".alert").fadeOut(1500);}, 3000);
+    </div>
+    {{/if}} {{{body}}}
+</body>
+<script>
+    $(document).ready(function() {
+        setTimeout(() => {
+            $(".alert").fadeOut(1500);
+        }, 3000);
     });
-  </script>
+</script>
+
 </html>

@@ -9,7 +9,8 @@ describe('Viewing own profile page', function () {
     cy.get('#new-user-form').find('#email').type(`a@example.com`);
     cy.get('#new-user-form').find('#password').type('12345');
     cy.get('#new-user-form').submit();
-    cy.contains('Profile').click();
+    cy.contains('a').click();
+    cy.contains('My Profile').click();
     cy.get('h1').should('contain', 'a@example.com');
   });
 });

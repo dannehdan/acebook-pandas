@@ -11,7 +11,8 @@ const SessionsController = {
       };
       res.redirect('/posts');
     } else {
-      res.render('sessions/new', { title: 'Log In' });
+      const resParams = { title: 'Log In' };
+      res.render('sessions/new', resParams);
     }
   },
 

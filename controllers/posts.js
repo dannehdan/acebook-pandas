@@ -185,9 +185,11 @@ var PostsController = {
       });
   },
 
-  New: function (req, res) {
-    res.render('posts/new', { title: 'New Post' });
-  },
+  // New: function (req, res) {
+  //   const resParams = { title: 'New Post', user: req.session.user };
+
+  //   res.render('posts/new', resParams);
+  // },
 
   Create: function (req, res) {
     req.body.poster = req.session.user.email;
