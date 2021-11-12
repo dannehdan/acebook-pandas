@@ -221,6 +221,7 @@ a {
   border-width: 2px;
   border-radius: 50%;
 }
+
 /* ============================ */
 
 /* =========== POST =========== */
@@ -417,7 +418,8 @@ body {
 
 .like-button,
 .comment-button,
-.comment-toggle-button {
+.comment-toggle-button,
+.show-more-comments-button {
   display: block;
   background-color: rgb(255, 255, 255);
   border: none;
@@ -432,7 +434,18 @@ body {
   padding: 0px 5px;
 }
 
+.show-more-comments-button {
+  height: auto;
+  width: auto;
+  padding: 5px;
+}
+
 .comment-text {
   font-size: 12px;
   padding: 10px;
+}
+
+.displayBadge {
+  display: none;
+  text-align: center;
 }
