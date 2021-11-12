@@ -10,6 +10,7 @@ const CommentsController = require('../controllers/comments');
 router.get('/', PostsController.Index);
 router.post('/', multipartyMiddleware, PostsController.Create);
 router.get('/search', PostsController.Search);
+router.delete('/', PostsController.Delete);
 
 // TODO: CRUD the link - PATCH /:post_id/like
 router.patch('/testLikes', PostsController.Like);

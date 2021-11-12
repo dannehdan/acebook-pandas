@@ -61,7 +61,7 @@
         <div class='comments-div' id='comments-for-{{this._id}}'>
             <hr class="comment-divide" style="display:{{#if this.comments }}block{{else}}none{{/if}}">
             {{#each this.comments}}
-            <div style="display:{{#if this.toCollapse }}none{{else}}block{{/if}}" class='{{#if this.toCollapse}}collapseComment{{/if}} comment-div container mx-auto' id='comment-{{this._id}}'>
+            <div style="display:{{#if this.toCollapse }}none{{else}}block{{/if}}" class='{{#if this.toCollapse}}collapse-comment{{/if}} comment-div container mx-auto' id='comment-{{this._id}}'>
                 <div class="row">
                     <div class='col-md-12 d-flex justify-content-start'>
                         <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />

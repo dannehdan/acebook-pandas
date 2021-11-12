@@ -13,7 +13,7 @@ describe('Creating comments', function () {
   it('toggler on click shows input field for comment and comment button', () => {
     cy.createPost('hi there!');
 
-    cy.get('.comment-toggle-button').click();
+    cy.contains('Add comment').click();
 
     cy.get('.comment-box-div')
       .find('.comment-text')

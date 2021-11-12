@@ -142,17 +142,18 @@ var showMoreComments = id => {
     .querySelectorAll('.comment-div')
     .forEach(comment => (comment.style.display = 'block'));
 
-  const showMoreCommentsButton = document.getElementById(
+  const showMoreCommentsButtonText = document.getElementById(
     `show-more-comments-for-${id}`
   ).innerText;
-
-  if (showMoreCommentsButton === 'Show less comments') {
+  if (showMoreCommentsButtonText === 'Show less comments') {
     document
       .getElementById(`comments-for-${id}`)
       .querySelectorAll('.comment-div')
       .forEach(
         comment =>
-          (comment.style.display = comment.classList.contains('collapseComment')
+          (comment.style.display = comment.classList.contains(
+            'collapse-comment'
+          )
             ? 'none'
             : 'block')
       );

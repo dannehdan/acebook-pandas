@@ -24,7 +24,7 @@
 </div>
 <hr class="solid">
 <main class='posts'>
-  <h3 class='mx-auto'>Timeline</h3>
+    <h3 class='mx-auto'>Timeline</h3>
     <div class="search-bar mx-auto">
         <form id="search-bar" action="search" method="get">
           <div class="row">
@@ -47,18 +47,34 @@
     </div>
   {{#each posts}}
     <div class='post card mx-auto post-div' id="post-{{this._id}}">
-      <div class='card-body'>
-        <div class='d-flex'>
-          <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
-          <div>
-            <p class='card-title'>{{this.posterName}}</p>
-            <p><small class='text-muted'>{{this.dateString}}</small></p>
-          </div>
+        <div class='card-body'>
+            <div class='d-flex'>
+                <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
+                <div>
+                    <p class='card-title'>{{this.posterName}}</p>
+                    <p><small class='text-muted'>{{this.dateString}}</small></p>
+                </div>
+            </div>
+            <div class="row" style="align-items: center;">
+                <div class="col-md-9">
+                  <p class='card-text'>{{this.message}}</p>
+                </div>
+                {{#if this.postDeletable}}
+                <div class="col-md-3">
+                    <button class='delete-button' id='delete-button-for-{{this._id}}' href='#' onclick="document.getElementById('delete-form-for-{{this._id}}').submit(); return false;">   
+                    <img src='/images/delete.png' height='15' width='15' /> 
+                    <span class='delete-text'>Delete</span>
+                  </button>
+
+                    <form class='delete-form' id='delete-form-for-{{this._id}}' action='/posts?_method=DELETE' method='POST'>
+                      <input type="hidden" name="id" value="{{this._id}}" />
+                    </form>
+                    
+                </div>
+                {{/if}}
+            </div>
         </div>
-        <div>
-          <p class='card-text'>{{this.message}}</p>
-        </div>
-      </div>
+    
 
       {{#if this.imageLink}}
         <div class='post-img-card card-img-bottom'>
@@ -149,7 +165,6 @@
         
         {{#if this.needsCommentExpander}}    
           <button class="show-more-button show-more-comments-button" onclick="showMoreComments('{{this._id}}')">
-            Show more comments
             <img src='/images/show-more-comments.png' height='15' width='15' />
             <span id="show-more-comments-for-{{this._id}}">
               Show more comments
@@ -165,10 +180,12 @@
       const comment = document.getElementById("comment-" + "{{scrollToComment}}");
       const post = comment.closest(".post-div");
 
-      const yOffset = -10;
-      const y = post.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({top: y, behavior: 'auto'});
-      
+        const yOffset = -10;
+        const y = post.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({
+            top: y,
+            behavior: 'auto'
+        });
     </script>
   {{/if}}
   
