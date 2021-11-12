@@ -1,4 +1,3 @@
-{{!-- <a class='new-post-link' href='/posts/new'>New post</a> --}}
 <div class='new-post-container mx-auto'>
   <div class='new-post'>
     <form
@@ -26,134 +25,151 @@
 <hr class="solid">
 <main class='posts'>
   <h3 class='mx-auto'>Timeline</h3>
-    <div class="search-bar mx-auto">
-        <form id="search-bar" action="search" method="get">
-          <div class="row">
-          <div class="col-md-7">
-            <input type="text" required placeholder="Search posts.." name="search_value">
-          </div>
-          <div class="col-md-2">
-            <select name="search_type">
-              <option value="content">Post Content</option>
-              <option value="author">User</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <input type="submit" value="Search">
-          </div>
-          </div>
-        </form>
-    </div>
-    {{#each posts}}
+  <div class="search-bar mx-auto">
+    <form id="search-bar" action="search" method="get">
+      <div class="row">
+        <div class="col-md-7">
+          <input type="text" required placeholder="Search posts.." name="search_value">
+        </div>
+        <div class="col-md-2">
+          <select name="search_type">
+            <option value="content">Post Content</option>
+            <option value="author">User</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input type="submit" value="Search">
+        </div>
+      </div>
+    </form>
+  </div>
 
+  {{#each posts}}
     <div class='post card mx-auto post-div' id="post-{{this._id}}">
-        <div class='card-body'>
-            <div class='d-flex'>
-                <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
-                <div>
-                    <p class='card-title'>{{this.posterName}}</p>
-                    <p><small class='text-muted'>{{this.dateString}}</small></p>
-                </div>
-            </div>
-            <div>
-                <p class='card-text'>{{this.message}}</p>
-            </div>
+      <div class='card-body'>
+        <div class='d-flex'>
+          <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
+          <div>
+            <p class='card-title'>{{this.posterName}}</p>
+            <p><small class='text-muted'>{{this.dateString}}</small></p>
+          </div>
         </div>
+        <div>
+          <p class='card-text'>{{this.message}}</p>
+        </div>
+      </div>
 
-        {{#if this.imageLink}}
+      {{#if this.imageLink}}
         <div class='post-img-card card-img-bottom'>
-            <img src={{this.imageLink}} class='post-img' alt='post image' />
+          <img src={{this.imageLink}} class='post-img' alt='post image' />
         </div>
-        {{/if}}
-        <div class='like-div container mx-auto' id='like-{{this._id}}'>
-            <div class='d-flex justify-content-center'>
-                <div class='d-flex col-sm-12 justify-content-end'>
-                    <p class='like-counter' style='margin-right: 10px;'><small class='like-number'>{{this.postLikes}}</small><small> likes</small></p>
-                    <button class='like-button' value="{{#if this.postLiked}}Liked{{else}}Like{{/if}}" onclick="addLike('{{this._id}}')">
+      {{/if}}
+      
+      <div class='like-div container mx-auto' id='like-{{this._id}}'>
+        <div class='d-flex justify-content-center'>
+          <div class='d-flex col-sm-12 justify-content-end'>
+            <p class='like-counter' style='margin-right: 10px;'><small class='like-number'>{{this.postLikes}}</small><small> likes</small></p>
+            <button class='like-button' value="{{#if this.postLiked}}Liked{{else}}Like{{/if}}" onclick="addLike('{{this._id}}')">
               <img src='/images/like.png' height='15' width='15' />
-              <span class='like-text'>{{#if
-                  this.postLiked
-                }}Liked{{else}}Like{{/if}}</span>
+              <span class='like-text'>
+                {{#if this.postLiked}}
+                  Liked
+                {{else}}
+                  Like
+                {{/if}}
+              </span>
             </button>
-                    <button class='comment-toggle-button' onclick="toggleCommenting('{{this._id}}')">
+
+            <button class='comment-toggle-button' onclick="toggleCommenting('{{this._id}}')">
               <img src='/images/chat.png' height='15' width='15' />
               <span
                 id='comment-toggle-text-{{this._id}}'
                 class='comment-toggle-text'
-              >Add comment</span>
+              >
+                Add comment
+              </span>
             </button>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <div id='comment-box-{{this._id}}' style='display: none;' class='comment-box-div container mx-auto'>
-            <form action='/posts/testComments' method='post'>
-                <input type='hidden' name='postId' value='{{this._id}}' style='display: none; margin:0px; padding:0px' />
-                <div class='row'>
-                    <div class='d-flex col-md-9 justify-content-start'>
-                        <input class='comment-text' id="comment-text-for-{{this._id}}" name='message' type='text' required placeholder='Enter a comment' />
-                    </div>
-                    <div class='d-flex col-md-3 justify-content-end'>
-                        {{!-- <button class="comment-button" onclick="addComment('{{this._id}}')"> --}}
+      <div id='comment-box-{{this._id}}' style='display: none;' class='comment-box-div container mx-auto'>
+        <form action='/posts/testComments' method='post'>
+          <input type='hidden' name='postId' value='{{this._id}}' style='display: none; margin:0px; padding:0px' />
+          <div class='row'>
+            <div class='d-flex col-md-9 justify-content-start'>
+              <input class='comment-text' id="comment-text-for-{{this._id}}" name='message' type='text' required placeholder='Enter a comment' />
+            </div>
+            <div class='d-flex col-md-3 justify-content-end'>
               <button class='comment-button' type='submit'>
                 <img src='/images/chat.png' height='15' width='15' />
                 <span>Comment</span>
               </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class='comments-div' id='comments-for-{{this._id}}'>
-            <hr class="comment-divide" style="display:{{#if this.comments }}block{{else}}none{{/if}}">
-            {{#each this.comments}}
-            <div style="display:{{#if this.toCollapse }}none{{else}}block{{/if}}" class='{{#if this.toCollapse}}collapseComment{{/if}} comment-div container mx-auto' id='comment-{{this._id}}'>
-                <div class="row">
-                    <div class='col-md-12 d-flex justify-content-start'>
-                        <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
-                        <div>
-                            <p class="card-title">{{this.commenterName}}</p>
-                            <p><small class="text-muted">{{this.dateString}}</small></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class='row'>
-                    <div class='d-flex col-md-6 justify-content-start'>
-                        <p class='comment-message'>{{this.message}}</p>
-                    </div>
-                    <div class='d-flex col-md-6 justify-content-end'>
-                        <p class='like-counter' style='margin-right: 10px;'><small class='like-number'>{{this.commentLikes}}</small><small> likes</small></p>
-                        <button class='like-button' value="{{#if this.commentLiked}}Liked{{else}}Like{{/if}}" onclick="handleCommentLike('{{this._id}}')">
-                  <img src='/images/like.png' height='15' width='15' />
-                  <span class='like-text'>{{#if
-                      this.commentLiked
-                    }}Liked{{else}}Like{{/if}}</span>
-                </button>
-                    </div>
-                </div>
             </div>
-            {{/each}}
-            
-            {{#if this.needsCommentExpander}}
-              <button class="show-more-comments-button"  onclick="showMoreComments('{{this._id}}')">
-                <img src='/images/show-more-comments.png' height='15' width='15' />
-                <span id="show-more-comments-for-{{this._id}}">Show more comments</span>
-                </button>
-            {{/if}}
-        </div>
-    </div>
-    {{/each}}
+          </div>
+        </form>
+      </div>
 
-    {{#if scrollToComment}}
+      <div class='comments-div' id='comments-for-{{this._id}}'>
+        <hr class="comment-divide" style="display:{{#if this.comments }}block{{else}}none{{/if}}">
+
+        {{#each this.comments}}
+          <div style="display:{{#if this.toCollapse }}none{{else}}block{{/if}}" class='{{#if this.toCollapse}}collapse-comment{{/if}} comment-div container mx-auto' id='comment-{{this._id}}'>
+            <div class="row">
+              <div class='col-md-12 d-flex justify-content-start'>
+                <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
+                <div>
+                  <p class="card-title commenter-name">{{this.commenterName}}</p>
+                  <p><small class="text-muted">{{this.dateString}}</small></p>
+                </div>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='d-flex col-md-6 justify-content-start'>
+                <p class='comment-message'>{{this.message}}</p>
+              </div>
+              <div class='d-flex col-md-6 justify-content-end'>
+                <p class='like-counter' style='margin-right: 10px;'><small class='like-number'>{{this.commentLikes}}</small><small> likes</small></p>
+                <button class='like-button like-comment-button' value="{{#if this.commentLiked}}Liked{{else}}Like{{/if}}" onclick="handleCommentLike('{{this._id}}')">
+                  <img src='/images/like.png' height='15' width='15' />
+                  <span class='like-text'>
+                    {{#if this.commentLiked}}
+                      Liked
+                    {{else}}
+                      Like
+                    {{/if}}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+        
+        {{#if this.needsCommentExpander}}    
+          <button class="show-more-button show-more-comments-button" onclick="showMoreComments('{{this._id}}')">
+            Show more comments
+            <img src='/images/show-more-comments.png' height='15' width='15' />
+            <span id="show-more-comments-for-{{this._id}}">
+              Show more comments
+            </span>
+          </button>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+
+  {{#if scrollToComment}}
     <script>
-      var comment = document.getElementById("comment-"+ "{{scrollToComment}}");
-      var post = comment.closest(".post-div");
+      const comment = document.getElementById("comment-" + "{{scrollToComment}}");
+      const post = comment.closest(".post-div");
 
       const yOffset = -10;
       const y = post.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({top: y, behavior: 'auto'});
       
     </script>
-    {{/if}}
-    <script src='interface.js'></script>
+  {{/if}}
+  
+  <script src='interface.js'></script>
 </main>
