@@ -1,6 +1,6 @@
 # Acebook
 
-This is a Node.js Acebook engineering project by pandas team.
+This is a Node.js Acebook engineering project by pandas team. This project can be viewed locally, or is hosted at https://acebook-pandas.herokuapp.com/
 
 It uses:
 
@@ -15,6 +15,10 @@ It uses:
 - [Prettier](https://prettier.io/) to style code consistently.
 - [Bootstrap](https://getbootstrap.com/) to make UI prettier.
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) to store passwords safely.
+- [Nano ID](https://github.com/ai/nanoid#readme) to generate unique string for image names.
+- [Node Fetch](https://github.com/node-fetch/node-fetch) to get login credentials from JSON file.
+- [Google Cloud Storage](https://www.npmjs.com/package/@google-cloud/storage) to upload images to the Google Cloud.
+- [Connect-multiparty](https://github.com/expressjs/connect-multiparty#readme) to handle multipart forms (e.g. form for creating post with an image).
 
 ## User Stories
 
@@ -30,84 +34,43 @@ It uses:
 - [x] As a user, so I can know who wrote a post, I would like to see their name next to it.
 - [ ] As a user, so I can know who wrote a post, I would like to see their photo next to it.
 - [ ] As a user, so I can introduce myself, I would like to enter info about me (DOB, bio and photo).
-- [ ] As a user, so I can disscuss interesting topic, I would like to add a comment to a post.
-- [ ] As a user, so I can support a comment, I would like to be able to like it.
+- [x] As a user, so I can disscuss interesting topic, I would like to add a comment to a post.
+- [x] As a user, so I can support a comment, I would like to be able to like it.
 - [ ] As a user, so I can correct my typos, I would like to edit my post or comment after posting.
 - [ ] As a user, so I can redact my opinion, I would like to delete a post or comment.
-- [ ] As a user, so everything looks good, I would like a nice UI.
+- [x] As a user, so everything looks good, I would like a nice UI.
 
-## Card wall
-
+## Tickets and process
 [Trello Board](https://trello.com/b/o0oJVI0n/acebook-pandas)
 
-## Quickstart
+### Run this project locally
 
-### Install Node.js
+```
+npm install
+```
+Install and start MongoDB
+```
+brew tap mongodb/brew
+brew install mongodb-community@4.2
+brew services start mongodb-community@4.2
+```
 
-1. Install Node Version Manager (NVM)
-   ```
-   brew install nvm
-   ```
-   Then follow the instructions to update your `~/.bash_profile`.
-1. Open a new terminal
-1. Install the latest long term support (LTS) version of [Node.js](https://nodejs.org/en/), currently `12.14.1`.
-   ```
-   nvm install 12.14.1
-   ```
+To start the server locally:
+```
+npm start
+```
+Browse to [http://localhost:3000](http://localhost:3000)
 
-### Set up your project
+### Running tests
 
-1. Fork this repository
-1. Rename your fork to `acebook-<team name>`
-1. Clone your fork to your local machine
-1. Install Node.js dependencies
-   ```
-   npm install
-   ```
-1. Install an ESLint plugin for your editor. For example: [linter-eslint](https://github.com/AtomLinter/linter-eslint) for Atom.
-1. Install MongoDB
-   ```
-   brew tap mongodb/brew
-   brew install mongodb-community@4.2
-   ```
-1. Start MongoDB
-   ```
-   brew services start mongodb-community@4.2
-   ```
-
-### Start
-
-1. Start the server
-   ```
-   npm start
-   ```
-1. Browse to [http://localhost:3000](http://localhost:3000)
-
-### Test
-
-- Run all tests
-  ```
-  npm test
-  ```
-- Run a check
-
-  ```bash
-  npm run lint              # linter only
-  npm run test:unit         # unit tests only
-  npm run test:integration  # integration tests only
-
-  # Bonus: only one integration test
-  npm run cy:run -- --spec cypress/integration/user_likes_spec.js
-  ```
-
-#### Start test server
-
-The server must be running locally with test configuration for the
-integration tests to pass.
-
+Start a test server, then run the test suite
 ```
 npm run start:test
 ```
 
 This starts the server on port `3030` and uses the `acebook_test` MongoDB database,
 so that integration tests do not interact with the development server.
+
+```
+npm test
+```

@@ -203,7 +203,7 @@ a {
   background-color: #56baed;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 15px 30px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -419,7 +419,9 @@ body {
 
 .like-button,
 .comment-button,
-.comment-toggle-button {
+.comment-toggle-button,
+.delete-button,
+.show-more-comments-button {
   display: block;
   background-color: rgb(255, 255, 255);
   border: none;
@@ -434,6 +436,12 @@ body {
   padding: 0px 5px;
 }
 
+.show-more-comments-button {
+  height: auto;
+  width: auto;
+  padding: 5px;
+}
+
 .comment-text {
   font-size: 12px;
   padding: 10px;
@@ -444,9 +452,35 @@ body {
   text-align: center;
 }
 
+
 .user-info {
   display: flex;
   flex-direction: column;
   max-width: 80vw;
   padding: 1rem;
+
+.delete-form {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.delete-button {
+  float: right;
+  height: 30px;
+}
+
+.delete-text {
+  text-align: center;
+  padding: 10px;
+}
+
+.input-group-text {
+  background-color: white;
+  border: none;
+}
+
+.form-select-sm {
+  font-size: 0.8rem;
+
 }

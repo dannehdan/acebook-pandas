@@ -1,8 +1,8 @@
-var Post = require('../models/post');
-var Comment = require('../models/comment');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 const User = require('../models/user');
 
-var timeDifference = require('../js_helpers');
+const timeDifference = require('../js_helpers');
 
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
@@ -54,7 +54,6 @@ async function uploadImage(image) {
 var PostsController = {
   Index: function (req, res) {
     var scrollTo = req.query.scroll_to;
-
     Post.aggregate([
       {
         // Get poster for their name
@@ -169,7 +168,8 @@ var PostsController = {
                 ? post.posterInfo[0]._id
                 : 'Anonymous',
               postLikes: post.likes.length,
-              postLiked: post.likes.includes(req.session.user.email)
+              postLiked: post.likes.includes(req.session.user.email),
+              postDeletable: req.session.user.email === post.poster
             };
           });
 
@@ -181,6 +181,10 @@ var PostsController = {
 
           if (scrollTo) {
             resParams.scrollToComment = scrollTo;
+          }
+
+          if (req.body.alert) {
+            req.session.message = req.body.alert;
           }
 
           res.render('posts/index', resParams);
@@ -380,6 +384,18 @@ var PostsController = {
 
     Post.updateOne({ _id: postId }, action).then(result => {
       res.send(result);
+    });
+  },
+
+  Delete: async function (req, res) {
+    await Post.findOne({ _id: req.body.id }).then(async post => {
+      if (post.poster !== req.session.user.email) {
+        res.redirect('/posts');
+      } else {
+        await Post.deleteOne({ _id: req.body.id }).then(() => {
+          res.redirect('/posts');
+        });
+      }
     });
   }
 };
