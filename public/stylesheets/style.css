@@ -418,7 +418,8 @@ body {
 
 .like-button,
 .comment-button,
-.comment-toggle-button {
+.comment-toggle-button,
+.delete-button {
   display: block;
   background-color: rgb(255, 255, 255);
   border: none;
@@ -441,4 +442,20 @@ body {
 .displayBadge {
   display: none;
   text-align: center;
+}
+
+.delete-form {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.delete-button {
+  float: right;
+  height: 30px;
+}
+
+.delete-text {
+  text-align: center;
+  padding: 10px;
 }

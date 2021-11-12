@@ -1,47 +1,42 @@
 {{!-- <a class='new-post-link' href='/posts/new'>New post</a> --}}
 <div class='new-post-container mx-auto'>
-  <div class='new-post'>
-    <form
-      id='new-post-form'
-      action='/posts'
-      method='post'
-      enctype='multipart/form-data'
-    >
-      <div class='row'>
-        <div class="col">
-            <input id='message' type='text' name='message' value='' required placeholder='What&#39s on your mind, {{user.name}}?' />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-9">
-          <input id='post-img' type='file' name='image' accept="image/x-png, image/gif, image/jpeg" />
-        </div>
-        <div class="col-md-3">
-          <input type='submit' value='Submit' />
-        </div>
-      </div>
-    </form>
-  </div>
+    <div class='new-post'>
+        <form id='new-post-form' action='/posts' method='post' enctype='multipart/form-data'>
+            <div class='row'>
+                <div class="col">
+                    <input id='message' type='text' name='message' value='' required placeholder='What&#39s on your mind, {{user.name}}?' />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <input id='post-img' type='file' name='image' accept="image/x-png, image/gif, image/jpeg" />
+                </div>
+                <div class="col-md-3">
+                    <input type='submit' value='Submit' />
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <hr class="solid">
 <main class='posts'>
-  <h3 class='mx-auto'>Timeline</h3>
+    <h3 class='mx-auto'>Timeline</h3>
     <div class="search-bar mx-auto">
         <form id="search-bar" action="search" method="get">
-          <div class="row">
-          <div class="col-md-7">
-            <input type="text" required placeholder="Search posts.." name="search_value">
-          </div>
-          <div class="col-md-2">
-            <select name="search_type">
+            <div class="row">
+                <div class="col-md-7">
+                    <input type="text" required placeholder="Search posts.." name="search_value">
+                </div>
+                <div class="col-md-2">
+                    <select name="search_type">
               <option value="content">Post Content</option>
               <option value="author">User</option>
             </select>
-          </div>
-          <div class="col-md-3">
-            <input type="submit" value="Search">
-          </div>
-          </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" value="Search">
+                </div>
+            </div>
         </form>
     </div>
     {{#each posts}}
@@ -55,8 +50,23 @@
                     <p><small class='text-muted'>{{this.dateString}}</small></p>
                 </div>
             </div>
-            <div>
-                <p class='card-text'>{{this.message}}</p>
+            <div class="row" style="align-items: center;">
+                <div class="col-md-9">
+                  <p class='card-text'>{{this.message}}</p>
+                </div>
+                {{#if this.postDeletable}}
+                <div class="col-md-3">
+                    <button class='delete-button' id='delete-button-for-{{this._id}}' href='#' onclick="document.getElementById('delete-form-for-{{this._id}}').submit(); return false;">   
+                    <img src='/images/delete.png' height='15' width='15' /> 
+                    <span class='delete-text'>Delete</span>
+                  </button>
+
+                    <form class='delete-form' id='delete-form-for-{{this._id}}' action='/posts?_method=DELETE' method='POST'>
+                      <input type="hidden" name="id" value="{{this._id}}" />
+                    </form>
+                    
+                </div>
+                    {{/if}}
             </div>
         </div>
 
@@ -75,13 +85,14 @@
                   this.postLiked
                 }}Liked{{else}}Like{{/if}}</span>
             </button>
+
                     <button class='comment-toggle-button' onclick="toggleCommenting('{{this._id}}')">
               <img src='/images/chat.png' height='15' width='15' />
               <span
                 id='comment-toggle-text-{{this._id}}'
                 class='comment-toggle-text'
               >Add comment</span>
-            </button>
+            </button> 
                 </div>
             </div>
         </div>
@@ -104,8 +115,7 @@
             </form>
         </div>
         <div class='comments-div' id='comments-for-{{this._id}}'>
-            <hr class="comment-divide" style="display:{{#if this.comments }}block{{else}}none{{/if}}">
-            {{#each this.comments}}
+            <hr class="comment-divide" style="display:{{#if this.comments }}block{{else}}none{{/if}}"> {{#each this.comments}}
             <div style="display:{{#if this.toCollapse }}none{{else}}block{{/if}}" class='{{#if this.toCollapse}}collapseComment{{/if}} comment-div container mx-auto' id='comment-{{this._id}}'>
                 <div class="row">
                     <div class='col-md-12 d-flex justify-content-start'>
@@ -132,24 +142,21 @@
                     </div>
                 </div>
             </div>
-            {{/each}}
-            
-            {{#if this.needsCommentExpander}}
-              <button id="show-more-comments-for-{{this._id}}" onclick="showMoreComments('{{this._id}}')">Show more comments</button>
-            {{/if}}
+            {{/each}} {{#if this.needsCommentExpander}}
+            <button id="show-more-comments-for-{{this._id}}" onclick="showMoreComments('{{this._id}}')">Show more comments</button> {{/if}}
         </div>
     </div>
-    {{/each}}
-
-    {{#if scrollToComment}}
+    {{/each}} {{#if scrollToComment}}
     <script>
-      var comment = document.getElementById("comment-"+ "{{scrollToComment}}");
-      var post = comment.closest(".post-div");
+        var comment = document.getElementById("comment-" + "{{scrollToComment}}");
+        var post = comment.closest(".post-div");
 
-      const yOffset = -10;
-      const y = post.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({top: y, behavior: 'auto'});
-      
+        const yOffset = -10;
+        const y = post.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({
+            top: y,
+            behavior: 'auto'
+        });
     </script>
     {{/if}}
     <script src='interface.js'></script>
