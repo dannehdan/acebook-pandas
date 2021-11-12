@@ -15,6 +15,10 @@ It uses:
 - [Prettier](https://prettier.io/) to style code consistently.
 - [Bootstrap](https://getbootstrap.com/) to make UI prettier.
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) to store passwords safely.
+- [Nano ID](https://github.com/ai/nanoid#readme) to generate unique string for image names.
+- [Node Fetch](https://github.com/node-fetch/node-fetch) to get login credentials from JSON file.
+- [Google Cloud Storage](https://www.npmjs.com/package/@google-cloud/storage) to upload images to the Google Cloud.
+- [Connect-multiparty](https://github.com/expressjs/connect-multiparty#readme) to handle multipart forms (e.g. form for creating post with an image).
 
 ## User Stories
 
@@ -30,11 +34,11 @@ It uses:
 - [x] As a user, so I can know who wrote a post, I would like to see their name next to it.
 - [ ] As a user, so I can know who wrote a post, I would like to see their photo next to it.
 - [ ] As a user, so I can introduce myself, I would like to enter info about me (DOB, bio and photo).
-- [ ] As a user, so I can disscuss interesting topic, I would like to add a comment to a post.
-- [ ] As a user, so I can support a comment, I would like to be able to like it.
+- [x] As a user, so I can disscuss interesting topic, I would like to add a comment to a post.
+- [x] As a user, so I can support a comment, I would like to be able to like it.
 - [ ] As a user, so I can correct my typos, I would like to edit my post or comment after posting.
 - [ ] As a user, so I can redact my opinion, I would like to delete a post or comment.
-- [ ] As a user, so everything looks good, I would like a nice UI.
+- [x] As a user, so everything looks good, I would like a nice UI.
 
 ## Card wall
 
