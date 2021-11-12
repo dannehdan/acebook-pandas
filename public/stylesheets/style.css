@@ -49,7 +49,8 @@ input[type='email'],
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type='submit'] {
+input[type='submit'],
+.user-info button {
   display: block;
   background-color: #56baed;
   border: none;
@@ -441,4 +442,11 @@ body {
 .displayBadge {
   display: none;
   text-align: center;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 80vw;
+  padding: 1rem;
 }

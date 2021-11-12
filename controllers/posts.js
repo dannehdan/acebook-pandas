@@ -159,11 +159,14 @@ var PostsController = {
             post.needsCommentExpander = post.comments.length > 2;
 
             post.likes = post.likes || [];
-
+            console.log(post.posterInfo);
             return {
               ...post,
               posterName: post.posterInfo[0]
                 ? post.posterInfo[0].name
+                : 'Anonymous',
+              posterId: post.posterInfo[0]
+                ? post.posterInfo[0]._id
                 : 'Anonymous',
               postLikes: post.likes.length,
               postLiked: post.likes.includes(req.session.user.email)

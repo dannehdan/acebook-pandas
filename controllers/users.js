@@ -48,7 +48,6 @@ const UsersController = {
           intro: 'User not found!',
           message: 'This user may no longer exist'
         };
-
         res.redirect('/posts');
       } else {
         Post.find({ poster: foundUser.email }, (err, posts) => {
@@ -59,11 +58,30 @@ const UsersController = {
               user: foundUser,
               posts: posts
             };
+
             res.render('users/user', resParams);
           }
         });
       }
     });
+  },
+
+  ChangeMe: async (req, res) => {
+    const { name, occupation, location } = req.body;
+    const _id = req.params.id;
+    console.log(_id);
+    console.log(name);
+    await User.updateOne(
+      { _id: _id },
+      { name: name, location: location, occupation: occupation },
+      function (err, user) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log('User updated: ' + user);
+        }
+      }
+    ).then(res.redirect('/users/' + _id));
   }
 };
 

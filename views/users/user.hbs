@@ -5,7 +5,7 @@
 
     var form = document.createElement("form");
     form.setAttribute("method", "post");
-    form.setAttribute("action", "submit.php");
+    form.setAttribute("action", "{{user.id}}");
 
     var nameInput = document.createElement("input");
     nameInput.setAttribute("type", "text");
@@ -35,12 +35,18 @@
   }
 </script>
 
-<div id="info"> 
-  <p>{{user.name}}</p>
-  <p>Occupation</p>
-  <p>Location</p>
-  <button onclick="createForm()">Edit</button>
+{{!-- <h3 class='mx-auto'>My Posts</h3> --}}
+
+<h3 class='mx-auto' style="margin-top: 30px">My Profile</h3>
+<div class="container mx-auto"> 
+  <div id="info" class="user-info card" style="max-width: 60vw; margin: auto; margin-top: 35px; margin-bottom: 30px"> 
+    <p style="font-weight: bold; font-size: 30px">{{user.name}}</p>
+    <p style="font-size: 30px">{{user.occupation}}</p>
+    <p style="font-size: 30px">{{user.location}}</p>
+    <button onclick="createForm()">Edit</button>
+  </div>
 </div>
+<h3 class='mx-auto'>My Posts</h3>
 
 {{#each posts}}
   <div class='post card mx-auto post-div' id="post-{{this._id}}">
