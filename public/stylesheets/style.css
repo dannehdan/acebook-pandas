@@ -221,6 +221,7 @@ a {
   border-width: 2px;
   border-radius: 50%;
 }
+
 /* ============================ */
 
 /* =========== POST =========== */
@@ -435,4 +436,9 @@ body {
 .comment-text {
   font-size: 12px;
   padding: 10px;
+}
+
+.displayBadge {
+  display: none;
+  text-align: center;
 }
