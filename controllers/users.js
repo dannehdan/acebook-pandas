@@ -1,3 +1,4 @@
+const Post = require('../models/post');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
@@ -50,8 +51,17 @@ const UsersController = {
 
         res.redirect('/posts');
       } else {
-        const resParams = { title: foundUser.name, user: foundUser };
-        res.render('users/user', resParams);
+        Post.find({ poster: foundUser.email }, (err, posts) => {
+          if (err) throw err;
+          else {
+            const resParams = {
+              title: foundUser.name,
+              user: foundUser,
+              posts: posts
+            };
+            res.render('users/user', resParams);
+          }
+        });
       }
     });
   }
