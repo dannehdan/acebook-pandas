@@ -68,27 +68,27 @@ Cypress.Commands.add('logOutUser', function () {
   cy.get('#logout-button').click();
 });
 
-Cypress.Commands.add('makeTestPost', function(text = 'Panda') {
+Cypress.Commands.add('makeTestPost', function (text = 'Panda') {
   cy.visit('/posts');
   cy.get('#new-post-form').find('[type="text"]').type(text);
   cy.get('#new-post-form').find('[type="file"]').attachFile('../panda.jpg');
   cy.get('#new-post-form').submit();
 });
 
-Cypress.Commands.add('makeTestPostWithoutImage', function(text = 'Panda') {
+Cypress.Commands.add('makeTestPostWithoutImage', function (text = 'Panda') {
   cy.visit('/posts');
   cy.get('#new-post-form').find('[type="text"]').type(text);
   cy.get('#new-post-form').submit();
 });
 
-Cypress.Commands.add('createPost', function(text) {
+Cypress.Commands.add('createPost', function (text) {
   cy.visitSignUpPage();
   cy.signUpNewUser('Hermione Granger', 'hermione');
   cy.makeTestPostWithoutImage(text);
-})
+});
 
-Cypress.Commands.add('addComment', function(text) {
+Cypress.Commands.add('addComment', function (text) {
   cy.get('.comment-toggle-button').click();
   cy.get('.comment-box-div').find('.comment-text').type(text);
   cy.get('.comment-box-div').find('.comment-button').click();
-})
+});

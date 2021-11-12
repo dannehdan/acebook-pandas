@@ -131,7 +131,7 @@
               </div>
               <div class='d-flex col-md-6 justify-content-end'>
                 <p class='like-counter' style='margin-right: 10px;'><small class='like-number'>{{this.commentLikes}}</small><small> likes</small></p>
-                <button class='like-button' value="{{#if this.commentLiked}}Liked{{else}}Like{{/if}}" onclick="handleCommentLike('{{this._id}}')">
+                <button class='like-button like-comment-button' value="{{#if this.commentLiked}}Liked{{else}}Like{{/if}}" onclick="handleCommentLike('{{this._id}}')">
                   <img src='/images/like.png' height='15' width='15' />
                   <span class='like-text'>
                     {{#if this.commentLiked}}
