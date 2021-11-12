@@ -1,8 +1,8 @@
-var Post = require('../models/post');
-var Comment = require('../models/comment');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 const User = require('../models/user');
 
-var timeDifference = require('../js_helpers');
+const timeDifference = require('../js_helpers');
 
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
