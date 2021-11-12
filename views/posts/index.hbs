@@ -17,7 +17,7 @@
           <input id='post-img' type='file' name='image' accept="image/x-png, image/gif, image/jpeg" />
         </div>
         <div class="col-md-3">
-          <input type='submit' value='Submit' />
+          <input  type='submit' value='Submit' />
         </div>
       </div>
     </form>
@@ -135,7 +135,10 @@
             {{/each}}
             
             {{#if this.needsCommentExpander}}
-              <button id="show-more-comments-for-{{this._id}}" onclick="showMoreComments('{{this._id}}')">Show more comments</button>
+              <button class="show-more-comments-button"  onclick="showMoreComments('{{this._id}}')">
+                <img src='/images/show-more-comments.png' height='15' width='15' />
+                <span id="show-more-comments-for-{{this._id}}">Show more comments</span>
+                </button>
             {{/if}}
         </div>
     </div>

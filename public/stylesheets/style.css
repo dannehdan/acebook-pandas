@@ -418,7 +418,8 @@ body {
 
 .like-button,
 .comment-button,
-.comment-toggle-button {
+.comment-toggle-button,
+.show-more-comments-button {
   display: block;
   background-color: rgb(255, 255, 255);
   border: none;
@@ -431,6 +432,12 @@ body {
   border-radius: 5px 5px 5px 5px;
   margin: 0px 5px;
   padding: 0px 5px;
+}
+
+.show-more-comments-button {
+  height: auto;
+  width: auto;
+  padding: 5px;
 }
 
 .comment-text {
