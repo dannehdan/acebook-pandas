@@ -75,7 +75,7 @@ describe('Creating comments', function () {
     cy.visit('/users/new');
     cy.signUpNewUser('Luna Lovegood', 'luna');
     cy.addComment('Nargles would approve this!');
-    
+
     cy.get('.comments-div')
       .find('.commenter-name')
       .should('contain', 'Luna Lovegood');

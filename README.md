@@ -15,6 +15,10 @@ It uses:
 - [Prettier](https://prettier.io/) to style code consistently.
 - [Bootstrap](https://getbootstrap.com/) to make UI prettier.
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) to store passwords safely.
+- [Nano ID](https://github.com/ai/nanoid#readme) to generate unique string for image names.
+- [Node Fetch](https://github.com/node-fetch/node-fetch) to get login credentials from JSON file.
+- [Google Cloud Storage](https://www.npmjs.com/package/@google-cloud/storage) to upload images to the Google Cloud.
+- [Connect-multiparty](https://github.com/expressjs/connect-multiparty#readme) to handle multipart forms (e.g. form for creating post with an image).
 
 ## User Stories
 

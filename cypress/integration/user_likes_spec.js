@@ -1,4 +1,4 @@
-describe('Creating posts', function () {
+describe('Liking posts', function () {
   beforeEach(async function () {
     await cy.task('db:drop:all');
   });
