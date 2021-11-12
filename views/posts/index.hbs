@@ -25,25 +25,26 @@
 <hr class="solid">
 <main class='posts'>
   <h3 class='mx-auto'>Timeline</h3>
-  <div class="search-bar mx-auto">
-    <form id="search-bar" action="search" method="get">
-      <div class="row">
-        <div class="col-md-7">
-          <input type="text" required placeholder="Search posts.." name="search_value">
-        </div>
-        <div class="col-md-2">
-          <select name="search_type">
-            <option value="content">Post Content</option>
-            <option value="author">User</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <input type="submit" value="Search">
-        </div>
-      </div>
-    </form>
-  </div>
-
+    <div class="search-bar mx-auto">
+        <form id="search-bar" action="search" method="get">
+          <div class="row">
+            <div class="col-md-9">
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" required placeholder="Search posts.." name="search_value">
+              <div class="input-group-text p-0">
+                  <select name="search_type" class="form-select form-select-sm shadow-none border-0">
+                      <option value="content">By Post</option>
+                      <option value="author">By User</option>
+                  </select>
+              </div>
+            </div>
+            </div>
+              <div class="col-md-3">
+                <input type="submit" value="Search">
+              </div>
+          </div>
+        </form>
+    </div>
   {{#each posts}}
     <div class='post card mx-auto post-div' id="post-{{this._id}}">
       <div class='card-body'>
