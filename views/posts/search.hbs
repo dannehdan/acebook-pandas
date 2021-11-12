@@ -1,5 +1,5 @@
 <main class='posts'>
-  <h3 class='mx-auto' style="text-align: center;">Timeline</h3>
+  <h3 class='mx-auto' style='margin-top: 20px;'>Timeline</h3>
     {{#each posts}}
 
     <div class='post card mx-auto post-div' id="post-{{this._id}}">
@@ -50,7 +50,6 @@
                         <input class='comment-text' id="comment-text-for-{{this._id}}" name='message' type='text' required placeholder='Enter a comment' />
                     </div>
                     <div class='d-flex col-md-4 justify-content-end'>
-                        {{!-- <button class="comment-button" onclick="addComment('{{this._id}}')"> --}}
               <button class='comment-button' type='submit'>
                 <img src='/images/chat.png' height='15' width='15' />
                 <span>Comment</span>
