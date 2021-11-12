@@ -1,3 +1,4 @@
+const Post = require('../models/post');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
@@ -47,13 +48,40 @@ const UsersController = {
           intro: 'User not found!',
           message: 'This user may no longer exist'
         };
-
         res.redirect('/posts');
       } else {
-        const resParams = { title: foundUser.name, user: foundUser };
-        res.render('users/user', resParams);
+        Post.find({ poster: foundUser.email }, (err, posts) => {
+          if (err) throw err;
+          else {
+            const resParams = {
+              title: foundUser.name,
+              user: foundUser,
+              posts: posts
+            };
+
+            res.render('users/user', resParams);
+          }
+        });
       }
     });
+  },
+
+  ChangeMe: async (req, res) => {
+    const { name, occupation, location } = req.body;
+    const _id = req.params.id;
+    console.log(_id);
+    console.log(name);
+    await User.updateOne(
+      { _id: _id },
+      { name: name, location: location, occupation: occupation },
+      function (err, user) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log('User updated: ' + user);
+        }
+      }
+    ).then(res.redirect('/users/' + _id));
   }
 };
 

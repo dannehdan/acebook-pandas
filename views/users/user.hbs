@@ -1,1 +1,73 @@
-<h1>Welcome {{user.email}}, this is your profile page</h1>
+<script>
+  function createForm() {
+    infoDiv = document.getElementById("info")
+    infoDiv.innerHTML = ""
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "{{user.id}}");
+
+    var nameInput = document.createElement("input");
+    nameInput.setAttribute("type", "text");
+    nameInput.setAttribute("name", "name");
+    nameInput.setAttribute("placeholder", "Name");
+
+    var occupationInput = document.createElement("input");
+    occupationInput.setAttribute("type", "text");
+    occupationInput.setAttribute("name", "occupation");
+    occupationInput.setAttribute("placeholder", "Occupation");
+
+    var locationInput = document.createElement("input");
+    locationInput.setAttribute("type", "text");
+    locationInput.setAttribute("name", "location");
+    locationInput.setAttribute("placeholder", "Location");
+
+    var submitBtn = document.createElement("input");
+    submitBtn.setAttribute("type", "submit")
+    submitBtn.setAttribute("value", "Change Details");
+
+    form.append(nameInput); 
+    form.append(occupationInput); 
+    form.append(locationInput)
+    form.append(submitBtn); 
+
+    infoDiv.appendChild(form);
+  }
+</script>
+
+{{!-- <h3 class='mx-auto'>My Posts</h3> --}}
+
+<h3 class='mx-auto' style="margin-top: 30px">My Profile</h3>
+<div class="container mx-auto"> 
+  <div id="info" class="user-info card" style="max-width: 60vw; margin: auto; margin-top: 35px; margin-bottom: 30px"> 
+    <p style="font-weight: bold; font-size: 30px">{{user.name}}</p>
+    <p style="font-size: 30px">{{user.occupation}}</p>
+    <p style="font-size: 30px">{{user.location}}</p>
+    <button onclick="createForm()">Edit</button>
+  </div>
+</div>
+<h3 class='mx-auto'>My Posts</h3>
+
+{{#each posts}}
+  <div class='post card mx-auto post-div' id="post-{{this._id}}">
+      <div class='card-body'>
+          <div class='d-flex'>
+              <img class='post-profile-photo' src='https://png.pngitem.com/pimgs/s/111-1114718_transparent-sleep-icon-png-person-icon-circle-png.png' />
+              <div>
+                  <p class='card-title'>{{this.posterName}}</p>
+                  <p><small class='text-muted'>{{this.dateString}}</small></p>
+              </div>
+          </div>
+          <div>
+              <p class='card-text'>{{this.message}}</p>
+          </div>
+      </div>
+
+      {{#if this.imageLink}}
+      <div class='post-img-card card-img-bottom'>
+          <img src={{this.imageLink}} class='post-img' alt='post image' />
+      </div>
+      {{/if}}
+  </div>
+{{/each}}
+
